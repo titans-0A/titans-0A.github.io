@@ -40,165 +40,6 @@
     <link rel="stylesheet" href="css/style.css">
     <title> Team-Titans </title>
 </head>
-<!-- ******* REPLACE HERO VIDEO & SMALL CSS PATCH ******* -->
-<style>
-/* HERO / VIDEO / PARTICLES stacking + positioning fix ------------------ */
-
-/* ensure hero is the stacking context */
-.hero {
-  position: relative;
-  min-height: 100vh;
-  overflow: hidden;
-}
-
-/* center & crop the video around its center (better than top:0 left:0) */
-.bg-video {
-  position: absolute !important;
-  top: 50% !important;
-  left: 50% !important;
-  transform: translate(-50%, -50%) !important;
-  /* allow the video to fill and crop while preserving aspect */
-  min-width: 100% !important;
-  min-height: 100% !important;
-  width: auto !important;
-  height: auto !important;
-  object-fit: cover !important;
-  object-position: center center !important;
-  /* place video above particles but below content */
-  z-index: 0 !important;
-  pointer-events: none !important;
-}
-
-/* particles behind the video */
-#particles-js {
-  position: absolute;
-  inset: 0;
-  z-index: -1;              /* <- behind the video */
-  pointer-events: none;
-}
-
-/* subtle overlay between video and content (if you want darker look) */
-.video-overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 0;               /* sits same level as video (but overlay color shows above) */
-  background: linear-gradient(rgba(0,0,0,0.35), rgba(0,0,0,0.35));
-  pointer-events: none;
-}
-
-/* content must be above both particles & video */
-.hero .container,
-.hero-text,
-.hero-image,
-.navbar.fixed-top {
-  position: relative;
-  z-index: 2;               /* content above everything in hero */
-}
-
-/* fallback button visible when autoplay blocked */
-#video-play-fallback { z-index: 9999; pointer-events: auto; }
-
-/* ensure navbar remains topmost visually */
-.navbar.fixed-top { z-index: 1030; }
-</style>
-
-<!-- Video wrapper (replace your existing video block with this) -->
-<div style="position:relative;">
-  <video id="heroVideo" class="bg-video"
-         autoplay muted playsinline loop preload="auto"
-         poster="images/team/video-poster.jpg" tabindex="-1" aria-hidden="true">
-    <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
-    <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
-    Your browser does not support the video tag.
-  </video>
-
-  <!-- fallback tap button -->
-  <button id="video-play-fallback" style="display:none; position:absolute; left:50%; top:50%; transform:translate(-50%,-50%); background:rgba(0,0,0,0.55); color:#fff; padding:10px 14px; border-radius:8px; font-weight:600; cursor:pointer;">
-    Tap to play
-  </button>
-</div>
-
-<!-- keep your existing JS autoplay attempts, but ensure we re-check sizing on load/resize -->
-<script>
-(function(){
-  const v = document.getElementById('heroVideo');
-  const fallback = document.getElementById('video-play-fallback');
-  if (!v) return;
-
-  function showFallback(){ fallback && (fallback.style.display = 'block'); }
-  function hideFallback(){ fallback && (fallback.style.display = 'none'); }
-
-  // Try to autoplay; if blocked, show fallback
-  function tryPlay() {
-    v.play().then(()=> {
-      hideFallback();
-      // remove poster once playing for crispness
-      try { v.removeAttribute('poster'); } catch(e){}
-    }).catch(err => {
-      console.warn('Autoplay blocked or failed:', err);
-      showFallback();
-    });
-  }
-
-  v.addEventListener('loadeddata', tryPlay);
-  v.addEventListener('canplay', tryPlay);
-
-  // fallback click (manual play)
-  if (fallback) {
-    fallback.addEventListener('click', function(){
-      v.muted = true;
-      v.play().then(()=> hideFallback()).catch(e => console.warn(e));
-    });
-  }
-
-  // re-center on resize (helps some browsers)
-  function recenterVideo(){
-    // CSS handles centering, but force a tiny reflow for safety
-    if (v) { v.style.transform = 'translate(-50%,-50%)'; }
-  }
-  window.addEventListener('resize', recenterVideo);
-  window.addEventListener('orientationchange', recenterVideo);
-
-  // ensure loop restarts reliably
-  v.addEventListener('ended', ()=> { try { v.currentTime = 0; v.play(); } catch(e){} });
-
-  // attempt play after first user gesture (mobile)
-  function onFirstGesture() { tryPlay(); window.removeEventListener('click', onFirstGesture); window.removeEventListener('touchstart', onFirstGesture); }
-  window.addEventListener('click', onFirstGesture, { once:true, capture:true });
-  window.addEventListener('touchstart', onFirstGesture, { once:true, capture:true });
-})();
-</script>
-<!-- ******* END HERO PATCH ******* -->
-<body class="home-1">
-
-    <!-- start preLoader -->
-    <div id="preloader">
-        <svg id="mainSVG" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 600">
-      <defs>
-        <radialGradient id="mainGrad" cx="400" cy="300" fx="400" fy="300" r="100" gradientUnits="userSpaceOnUse">
-          <stop offset=".68" stop-color="#21df51" />
-          <stop offset=".72" stop-color="#3add63" />
-          <stop offset=".77" stop-color="#4fdd73" />
-          <stop offset=".82" stop-color="#66db83" />
-          <stop offset=".88" stop-color="#7cd893" />
-          <stop offset=".93" stop-color="#95d8a6" />
-          <stop offset=".99" stop-color="#bde6c7" />
-          <stop offset="1" stop-color="#e3f1e7" />
-        </radialGradient>
-      </defs>
-      <circle id="fillDot" cx="400" cy="300" fill="#21df51" r="100" />
-      <circle id="gradDot" cx="400" cy="300" fill="url(#mainGrad)" r="100" />
-    </svg>
-    </div>
-    <!-- end preLoader -->
-
-    <!-- start scroll to top button -->
-    <div id="progress">
-        <span id="progress-value"><i class="bi bi-arrow-up-short"></i></span>
-    </div>
-    <!-- end scroll to top button -->
-
-
     <!-- ======= start Header ======= -->
 <header class="header">
     <nav class="navbar navbar-expand-lg navbar-light fixed-top">
@@ -240,14 +81,34 @@
     
    <section class="hero d-flex flex-column justify-content-center align-items-center mt-5 pt-5" id="hero">
     <!-- Background Video -->
-   <!-- Background Video (robust/autoplay-friendly) -->
+ <!-- ===== Minimal fix: center + robust autoplay/loop ===== -->
 <style>
+  /* container should be positioned and clip overflow */
+  .hero-video-wrap { position: relative; width: 100%; height: 100vh; overflow: hidden; }
+
+  /* center & cover the video */
+  #heroVideo {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    min-width: 100%;
+    min-height: 100%;
+    width: auto;
+    height: auto;
+    object-fit: cover;
+    object-position: center center;
+    z-index: 0;              /* you can adjust if you need particles above/below */
+    pointer-events: none;
+    -webkit-user-select: none;
+    user-select: none;
+  }
+
   /* hide native big-play overlays on WebKit/Blink */
   #heroVideo::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
-  #heroVideo::-webkit-media-controls { display:none !important; }
-  /* optional: prevent context menu (avoids pause via long-press on iOS) */
-  #heroVideo { -webkit-user-select: none; user-select: none; }
-  /* style for the fallback tap button */
+  #heroVideo::-webkit-media-controls { display: none !important; }
+
+  /* fallback tap button (styled so it sits above the video) */
   #video-play-fallback {
     position: absolute;
     left: 50%;
@@ -255,24 +116,32 @@
     transform: translate(-50%,-50%);
     z-index: 20;
     display: none;
-    background: rgba(0,0,0,0.5);
+    background: rgba(0,0,0,0.55);
     color: #fff;
     padding: 10px 14px;
     border-radius: 8px;
     font-weight: 600;
     cursor: pointer;
     font-size: 14px;
+    border: 1px solid rgba(255,255,255,0.12);
   }
 </style>
 
-<div style="position:relative;">
-  <video id="heroVideo" class="bg-video" autoplay muted playsinline loop preload="auto" poster="images/team/video-poster.jpg" tabindex="-1" aria-hidden="true">
+<div class="hero-video-wrap" aria-hidden="true">
+  <video id="heroVideo"
+         class="bg-video"
+         autoplay
+         muted
+         playsinline
+         preload="auto"
+         loop
+         poster="images/team/video-poster.jpg"
+         tabindex="-1">
     <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
     <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
     Your browser does not support the video tag.
   </video>
 
-  <!-- fallback tap button (only shown if autoplay blocked) -->
   <button id="video-play-fallback" aria-hidden="false">Tap to play</button>
 </div>
 
@@ -280,55 +149,60 @@
 (function(){
   const v = document.getElementById('heroVideo');
   const fallback = document.getElementById('video-play-fallback');
-
   if (!v) return;
 
-  function showFallback() {
-    fallback.style.display = 'block';
-  }
-  function hideFallback() {
-    fallback.style.display = 'none';
-  }
+  // enforce loop from JS (defensive)
+  try { v.loop = true; } catch(e){}
 
-  // Try to play when enough data is loaded
+  function showFallback(){ if (fallback) fallback.style.display = 'block'; }
+  function hideFallback(){ if (fallback) fallback.style.display = 'none'; }
+
+  // robust tryPlay: try to play, if blocked show fallback
   function tryPlay() {
+    if (!v) return;
+    // if already playing, hide fallback
+    if (!v.paused && !v.ended) { hideFallback(); return; }
     v.play().then(()=> {
-      console.log('Hero video playing (autoplay successful).');
       hideFallback();
+      // remove poster for crispness after play
+      try { v.removeAttribute('poster'); } catch(e){}
     }).catch(err => {
-      console.warn('Autoplay prevented or failed:', err);
-      // Show friendly tap-to-play so user can enable playback
+      // autoplay prevented — show fallback button
+      console.warn('Autoplay blocked or failed:', err);
       showFallback();
     });
   }
 
-  // If video loads, immediately attempt to play
-  v.addEventListener('canplay', tryPlay);
+  // When enough buffered to play through, attempt autoplay
+  v.addEventListener('canplaythrough', tryPlay);
+  v.addEventListener('loadedmetadata', tryPlay);
   v.addEventListener('loadeddata', tryPlay);
 
-  // If there's a network or file error, show helpful message and console info
-  v.addEventListener('error', function(e) {
-    console.error('Hero video failed to load. Check file path & network. Event:', e);
-    // display small notice on screen
-    const n = document.createElement('div');
-    n.style.position='fixed'; n.style.right='12px'; n.style.bottom='12px';
-    n.style.background='rgba(255,80,80,0.95)'; n.style.color='#fff'; n.style.padding='8px 10px';
-    n.style.zIndex='99999'; n.style.fontSize='13px';
-    n.textContent = 'Video load failed — open DevTools → Network to inspect the request.';
-    document.body.appendChild(n);
+  // If ended for any reason, restart (some browsers pause at end)
+  v.addEventListener('ended', ()=> {
+    try { v.currentTime = 0; v.play().catch(()=>{}); } catch(e){ console.warn('Loop restart failed', e); }
   });
 
-  // Fallback play button handler (for browsers that block autoplay)
-  fallback.addEventListener('click', function(){
-    v.muted = true;              // ensure muted for autoplay rules, then play
-    v.play().then(()=> {
-      hideFallback();
-    }).catch(err => {
-      console.warn('Manual play failed:', err);
+  // If video errors, show console notice
+  v.addEventListener('error', (e) => {
+    console.error('Hero video error event:', e);
+    // (optional) show a small UI notice
+  });
+
+  // fallback manual play handler
+  if (fallback) {
+    fallback.addEventListener('click', function(){
+      // ensure muted (browsers allow muted play)
+      v.muted = true;
+      v.play().then(()=> {
+        hideFallback();
+      }).catch(err => {
+        console.warn('Manual play failed:', err);
+      });
     });
-  });
+  }
 
-  // Also attempt to play on first user gesture anywhere on the page (useful for mobile)
+  // Also try play on first user gesture (mobile). Many browsers allow play after gesture.
   function onFirstGesture() {
     tryPlay();
     window.removeEventListener('click', onFirstGesture);
@@ -337,18 +211,18 @@
   window.addEventListener('click', onFirstGesture, { once: true, capture: true });
   window.addEventListener('touchstart', onFirstGesture, { once: true, capture: true });
 
-  // Extra: ensure loop is honored (some browsers pause on end if JS interacts)
-  v.addEventListener('ended', ()=> {
-    try { v.currentTime = 0; v.play(); } catch(e){ console.warn('Loop restart failed', e); }
+  // If page becomes visible again, reattempt playback
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') tryPlay();
   });
 
-  // Debug: log network info after short delay
+  // small debug log of sources (safe)
   setTimeout(()=> {
-    console.log('Video srcs:', Array.from(v.querySelectorAll('source')).map(s=>s.getAttribute('src')));
-    // If running locally, check that the video request exists in network tab
-  }, 800);
+    try { console.log('Hero video sources:', Array.from(v.querySelectorAll('source')).map(s=>s.getAttribute('src'))); } catch(e){}
+  }, 400);
 })();
 </script>
+<!-- ===== end minimal fix ===== -->
     <!-- Optional Overlay -->
     <div class="video-overlay"></div>
     <div id="particles-js"></div>
@@ -1035,6 +909,7 @@ Mentors: abc, xyz
 
     
 </html>
+
 
 
 

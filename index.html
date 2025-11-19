@@ -112,9 +112,41 @@
     
    <section class="hero d-flex flex-column justify-content-center align-items-center mt-5 pt-5" id="hero">
     <!-- Background Video -->
-    <video autoplay loop muted playsinline class="bg-video">
-    <source src="images/team/Team Working Timelapse.mp4" type="video/mp4">
+    <!-- Background Video (fixed: prefer renaming file to team-working-timelapse.mp4) -->
+<video id="heroVideo" autoplay loop muted playsinline class="bg-video" poster="images/team/video-poster.jpg">
+  <!-- Preferred: rename file to remove spaces and use lowercase -->
+  <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
+  <!-- Fallback: encoded spaces (use only if you can't rename the file yet) -->
+  <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
+  Your browser does not support the video tag.
 </video>
+
+<!-- Debug helper (safe) -->
+<script>
+(function(){
+  const v = document.getElementById('heroVideo');
+  if (!v) return;
+
+  // Try to play (some browsers need user gesture; this is safe and logs if blocked)
+  v.play().then(()=> {
+    console.log('Hero video playing (autoplay successful).');
+  }).catch(err => {
+    console.warn('Autoplay prevented:', err);
+  });
+
+  v.addEventListener('loadeddata', ()=> console.log('Hero video loaded OK.'));
+  v.addEventListener('error', (e)=>{
+    console.error('Hero video failed to load. Check path/network and case sensitivity. Error event:', e);
+    // show small debug notice (non-destructive)
+    const n = document.createElement('div');
+    n.style.position='fixed'; n.style.right='12px'; n.style.bottom='12px';
+    n.style.background='rgba(255,80,80,0.95)'; n.style.color='#fff'; n.style.padding='8px 10px';
+    n.style.zIndex='99999'; n.style.fontSize='13px';
+    n.textContent = 'Video load failed — check Console > Network for the file request.';
+    document.body.appendChild(n);
+  });
+})();
+</script>
     
     <!-- Optional Overlay -->
     <div class="video-overlay"></div>
@@ -802,6 +834,7 @@ Mentors: abc, xyz
 
     
 </html>
+
 
 
 

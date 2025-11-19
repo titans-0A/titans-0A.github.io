@@ -112,39 +112,113 @@
     
    <section class="hero d-flex flex-column justify-content-center align-items-center mt-5 pt-5" id="hero">
     <!-- Background Video -->
-    <!-- Background Video (fixed: prefer renaming file to team-working-timelapse.mp4) -->
-<video id="heroVideo" autoplay loop muted playsinline class="bg-video" poster="images/team/video-poster.jpg">
-  <!-- Preferred: rename file to remove spaces and use lowercase -->
-  <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
-  <!-- Fallback: encoded spaces (use only if you can't rename the file yet) -->
-  <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
-  Your browser does not support the video tag.
-</video>
+    <!-- Background Video (robust/autoplay-friendly) -->
+<style>
+  /* hide native big-play overlays on WebKit/Blink */
+  #heroVideo::-webkit-media-controls-start-playback-button { display: none !important; -webkit-appearance: none; }
+  #heroVideo::-webkit-media-controls { display:none !important; }
+  /* optional: prevent context menu (avoids pause via long-press on iOS) */
+  #heroVideo { -webkit-user-select: none; user-select: none; }
+  /* style for the fallback tap button */
+  #video-play-fallback {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%,-50%);
+    z-index: 20;
+    display: none;
+    background: rgba(0,0,0,0.5);
+    color: #fff;
+    padding: 10px 14px;
+    border-radius: 8px;
+    font-weight: 600;
+    cursor: pointer;
+    font-size: 14px;
+  }
+</style>
 
-<!-- Debug helper (safe) -->
+<div style="position:relative;">
+  <video id="heroVideo" class="bg-video" autoplay muted playsinline loop preload="auto" poster="images/team/video-poster.jpg" tabindex="-1" aria-hidden="true">
+    <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
+    <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
+    Your browser does not support the video tag.
+  </video>
+
+  <!-- fallback tap button (only shown if autoplay blocked) -->
+  <button id="video-play-fallback" aria-hidden="false">Tap to play</button>
+</div>
+
 <script>
 (function(){
   const v = document.getElementById('heroVideo');
+  const fallback = document.getElementById('video-play-fallback');
+
   if (!v) return;
 
-  // Try to play (some browsers need user gesture; this is safe and logs if blocked)
-  v.play().then(()=> {
-    console.log('Hero video playing (autoplay successful).');
-  }).catch(err => {
-    console.warn('Autoplay prevented:', err);
-  });
+  function showFallback() {
+    fallback.style.display = 'block';
+  }
+  function hideFallback() {
+    fallback.style.display = 'none';
+  }
 
-  v.addEventListener('loadeddata', ()=> console.log('Hero video loaded OK.'));
-  v.addEventListener('error', (e)=>{
-    console.error('Hero video failed to load. Check path/network and case sensitivity. Error event:', e);
-    // show small debug notice (non-destructive)
+  // Try to play when enough data is loaded
+  function tryPlay() {
+    v.play().then(()=> {
+      console.log('Hero video playing (autoplay successful).');
+      hideFallback();
+    }).catch(err => {
+      console.warn('Autoplay prevented or failed:', err);
+      // Show friendly tap-to-play so user can enable playback
+      showFallback();
+    });
+  }
+
+  // If video loads, immediately attempt to play
+  v.addEventListener('canplay', tryPlay);
+  v.addEventListener('loadeddata', tryPlay);
+
+  // If there's a network or file error, show helpful message and console info
+  v.addEventListener('error', function(e) {
+    console.error('Hero video failed to load. Check file path & network. Event:', e);
+    // display small notice on screen
     const n = document.createElement('div');
     n.style.position='fixed'; n.style.right='12px'; n.style.bottom='12px';
     n.style.background='rgba(255,80,80,0.95)'; n.style.color='#fff'; n.style.padding='8px 10px';
     n.style.zIndex='99999'; n.style.fontSize='13px';
-    n.textContent = 'Video load failed — check Console > Network for the file request.';
+    n.textContent = 'Video load failed — open DevTools → Network to inspect the request.';
     document.body.appendChild(n);
   });
+
+  // Fallback play button handler (for browsers that block autoplay)
+  fallback.addEventListener('click', function(){
+    v.muted = true;              // ensure muted for autoplay rules, then play
+    v.play().then(()=> {
+      hideFallback();
+    }).catch(err => {
+      console.warn('Manual play failed:', err);
+    });
+  });
+
+  // Also attempt to play on first user gesture anywhere on the page (useful for mobile)
+  function onFirstGesture() {
+    tryPlay();
+    window.removeEventListener('click', onFirstGesture);
+    window.removeEventListener('touchstart', onFirstGesture);
+  }
+  window.addEventListener('click', onFirstGesture, { once: true, capture: true });
+  window.addEventListener('touchstart', onFirstGesture, { once: true, capture: true });
+
+  // Extra: ensure loop is honored (some browsers pause on end if JS interacts)
+  v.addEventListener('ended', ()=> {
+    try { v.currentTime = 0; v.play(); } catch(e){ console.warn('Loop restart failed', e); }
+  });
+
+  // Debug: log network info after short delay
+  setTimeout(()=> {
+    console.log('Video srcs:', Array.from(v.querySelectorAll('source')).map(s=>s.getAttribute('src')));
+    // If running locally, check that the video request exists in network tab
+  }, 800);
 })();
 </script>
     
@@ -834,6 +908,7 @@ Mentors: abc, xyz
 
     
 </html>
+
 
 
 

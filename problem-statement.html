@@ -1,0 +1,364 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ISRO Selection Challenge — Problem Statements</title>
+
+  <!-- Core styles (keep your project CSS) -->
+  <link rel="stylesheet" href="css/bootstrap.min.css">
+  <link rel="stylesheet" href="css/style.css">
+
+  <style>
+    /* --- page base --- */
+    :root{
+      --bg:#07070a;
+      --card-bg: rgba(255,255,255,0.03);
+      --glass-border: rgba(255,255,255,0.05);
+      --accent-isro: #0072bd; /* ISRO-like blue */
+      --accent-ros: #00a99d;  /* complementary */
+      --footer-bg: rgba(8,8,10,0.72);
+    }
+    html,body { height:100%; }
+    body {
+      margin:0;
+      font-family: 'Outfit', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+      background: var(--bg);
+      color: #fff;
+      -webkit-font-smoothing:antialiased;
+      -moz-osx-font-smoothing:grayscale;
+      overflow-x:hidden;
+    }
+
+    /* --- hero header area --- */
+    .ps-header {
+      position:relative;
+      padding: 28px 18px 18px;
+      text-align:center;
+      /* use a simple translucent background (backdrop-filter needs transparency) */
+      background: rgba(12,12,12,0.36);
+      border-bottom: 1px solid rgba(255,255,255,0.03);
+      z-index: 40;
+      /* strong cross-browser backdrop-filter */
+      -webkit-backdrop-filter: blur(8px);
+      backdrop-filter: blur(8px);
+      /* keep header content crisp */
+      display:flex;
+      flex-direction:column;
+      align-items:center;
+      justify-content:center;
+      gap:8px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.45);
+    }
+    .ps-header .logo-wrap { display:flex; align-items:center; gap:12px; justify-content:center; }
+
+    /* FIX: constrain logo so it never expands/stretches
+       - use max-height and max-width and object-fit to preserve aspect ratio
+    */
+    .ps-header img {
+      height:52px;
+      max-height:56px;
+      width:auto;
+      max-width:220px;
+      display:block;
+      object-fit:contain;
+      /* ensure it remains crisp on high-dpi */
+      image-rendering: -webkit-optimize-contrast;
+    }
+
+    .ps-header h1 {
+      margin:0;
+      font-family: 'Outfit', 'TrajanLocal', serif;
+      font-weight:700;
+      font-size: clamp(20px, 3.6vw, 34px);
+      letter-spacing: .6px;
+      color: #fff;
+      text-align:center;
+      line-height:1.05;
+      text-shadow: 0 6px 18px rgba(0,0,0,0.6);
+    }
+    .ps-header p { opacity:.85; margin:0; font-size:15px; color: #e8e8e8; }
+
+    /* --- animated background layers --- */
+    .bg-anim {
+      position:fixed;
+      inset:0;
+      z-index:0;
+      pointer-events:none;
+      overflow:hidden;
+    }
+
+    /* soft gradient blobs */
+    .blob {
+      position:absolute;
+      width:520px;
+      height:520px;
+      border-radius:50%;
+      filter: blur(120px);
+      opacity:0.55;
+      transform: translate3d(0,0,0);
+      mix-blend-mode: screen;
+      animation: floaty 12s ease-in-out infinite;
+    }
+    .blob.one { background: radial-gradient(circle at 30% 30%, rgba(0,114,189,0.65), rgba(0,114,189,0.15) 45%, rgba(0,114,189,0.02)); left:-10%; top:-8%; animation-duration: 18s; }
+    .blob.two { background: radial-gradient(circle at 70% 70%, rgba(0,169,157,0.55), rgba(0,169,157,0.12) 40%, rgba(0,169,157,0.02)); right:-8%; bottom:-6%; animation-duration: 16s; animation-delay: -3s; }
+
+    @keyframes floaty {
+      0% { transform: translate3d(0,0,0) scale(1); }
+      50% { transform: translate3d(20px, -30px, 0) scale(1.05); }
+      100% { transform: translate3d(0,0,0) scale(1); }
+    }
+
+    /* particles container (particles.js) */
+    #ps-particles {
+      position: fixed;
+      inset: 0;
+      z-index: 5;
+      pointer-events: none;
+    }
+
+    /* --- main container --- */
+    main.container.ps {
+      position:relative;
+      z-index: 40; /* above particles & blobs */
+      padding: 36px 18px;
+      max-width: 980px;
+      margin: 0 auto;
+    }
+
+    .stream-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 18px;
+      margin-bottom: 16px;
+      border: 1px solid var(--glass-border);
+      box-shadow: 0 8px 30px rgba(2,6,12,0.6);
+      transition: transform .28s ease, box-shadow .28s ease;
+    }
+    .stream-card:hover {
+      transform: translateY(-6px);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    }
+    .stream-card h3 { margin: 0 0 6px; font-weight:700; font-size:18px; letter-spacing:.6px; }
+    .stream-card p { margin:0 0 10px; opacity:.9; color: #e8e8e8; }
+
+    .stream-actions { display:flex; gap:10px; align-items:center; flex-wrap:wrap; }
+    .stream-actions a { display:inline-flex; align-items:center; gap:8px; text-decoration:none; font-weight:700; padding:10px 14px; border-radius:12px; }
+
+    .btn-blue { background: linear-gradient(180deg, #1e73d6, #145ec2); color:#fff; box-shadow: 0 8px 30px rgba(20,94,194,0.12); border: none; }
+    .btn-dark { background: rgba(0,0,0,0.6); color:#fff; border: 1px solid rgba(255,255,255,0.06); }
+
+    /* --- the Apple-style dropdown (clean glassy) --- */
+    .track-select-wrap {
+      display:flex;
+      align-items:center;
+      gap:12px;
+      justify-content:flex-end;
+      margin-bottom:18px;
+    }
+
+    .track-select {
+      -webkit-appearance:none;
+      appearance:none;
+      background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+      border: 1px solid rgba(255,255,255,0.06);
+      color: #fff;
+      padding: 10px 14px;
+      border-radius: 14px;
+      font-weight:700;
+      outline:none;
+      min-width: 220px;
+      box-shadow: 0 6px 24px rgba(2,6,12,0.6);
+      transition: transform .12s ease;
+    }
+    .track-select:focus { transform: translateY(-2px); box-shadow: 0 14px 40px rgba(2,6,12,0.6); }
+
+    /* small caret via pseudo so select still native but styled */
+    .track-select-container {
+      position:relative;
+      display:inline-block;
+    }
+    .track-select-container::after {
+      content: '\25BE';
+      position:absolute;
+      right:12px;
+      top:50%;
+      transform:translateY(-50%);
+      pointer-events:none;
+      opacity:.85;
+      font-size:12px;
+    }
+
+    /* --- responsive tweaks --- */
+    @media (max-width:720px){
+      .track-select { min-width: 160px; }
+      .ps-header img { height:44px; max-height:48px; }
+      .ps-header h1 { font-size:20px; }
+      main.container.ps { padding: 24px 14px; }
+    }
+
+    /* Defensive: prevent large images inside cards from pushing layout */
+    .stream-card img { max-width:100%; height:auto; display:block; }
+
+    /* ===== Footer styles ===== */
+    .site-footer {
+      background: var(--footer-bg);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: #e6e6e6;
+      padding: 18px 20px;
+      margin-top: 36px;
+      backdrop-filter: blur(6px);
+    }
+    .site-footer .footer-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap:wrap;
+    }
+    .site-footer .left, .site-footer .center, .site-footer .right {
+      flex: 1 1 200px;
+      min-width: 180px;
+    }
+    .site-footer .left { text-align:left; }
+    .site-footer .center { text-align:center; }
+    .site-footer .right { text-align:right; }
+
+    .site-footer .center h4 {
+      margin:0;
+      font-size:18px;
+      letter-spacing: .8px;
+      font-weight:800;
+      color: #ffffff;
+    }
+    .site-footer .left p, .site-footer .right p {
+      margin:0;
+      font-size:14px;
+      opacity:0.92;
+      line-height:1.3;
+    }
+
+    @media (max-width:720px) {
+      .site-footer .left, .site-footer .center, .site-footer .right { text-align:center; min-width: 100%; }
+      .site-footer .right { margin-top:8px; }
+    }
+
+  </style>
+</head>
+<body>
+  <!-- animated blobs and particles behind content -->
+  <div class="bg-anim" aria-hidden="true">
+    <div class="blob one" aria-hidden="true"></div>
+    <div class="blob two" aria-hidden="true"></div>
+    <div id="ps-particles" aria-hidden="true"></div>
+  </div>
+
+  <header class="ps-header" role="banner">
+    <div class="logo-wrap">
+      <!-- fixed: use your uploaded file path so it won't blow up (keeps aspect ratio) -->
+      <img src="isro.jpg" alt="ISRO">
+    </div>
+    <h1>ISRO Robotics Challenge</h1>
+    <p style="opacity:.85;margin-top:8px;">Choose a Specific Problem Statement</p>
+  </header>
+
+  <main class="container ps" role="main">
+
+    <!-- Mechanical -->
+    <div id="card-mechanical" class="stream-card" role="region" aria-labelledby="mech-title">
+      <h3 id="mech-title">Mechanical Engineering</h3>
+      <p>Problems focusing on kinematics, structural design, locomotion, mechanisms & manufacturing.</p>
+      <div class="stream-actions">
+        <a class="btn-blue" href="Ps/Mech.pdf" target="_blank" rel="noopener">Download PDF</a>
+        <a class="btn-dark" href="https://doc-00-a0-apps-viewer.googleusercontent.com/viewer/secure/pdf/vrfjqn8ufh7a08gqeqloklmvou0bpmig/aa5pqmf7hegatvhra687dm03o1r9t9mk/1763665950000/drive/03498461122880262390/ACFrOgBGzorxf63OgVWSm0MbyU1q7k4UIglBm1KV9_XSGXVLRrIZA_3J2e1Zf8o78aGVvzaS2AvT5NkiV4LlneYfsL1kpiNXbP3YrhttTqjN4dVDenFmviNocVZs6ldk4O7G64_n0mUrtSRXV7XQI44hiYr3jPMCRXgwdPRqry3PzAXbuEkCq9Xj5j_fXg3eiieSsE7vuJMLzIKuDGuST7Zk13bNu3iiMjN06SZ71w==?print=true" target="_blank" rel="noopener">Open Online</a>
+      </div>
+    </div>
+
+    <!-- Electronics -->
+    <div id="card-electronics" class="stream-card" role="region" aria-labelledby="elec-title">
+      <h3 id="elec-title">Electronics / ROS Track</h3>
+      <p>Problems about sensing, motor control, communications, ROS stacks, motor drivers and embedded systems.</p>
+      <div class="stream-actions">
+        <a class="btn-blue" href="ps/Elect.pdf" target="_blank" rel="noopener">Download PDF</a>
+        <a class="btn-dark" href="https://doc-0o-a0-apps-viewer.googleusercontent.com/viewer/secure/pdf/vrfjqn8ufh7a08gqeqloklmvou0bpmig/mbq1p5761he5higqvp39plpfj41coe89/1763665950000/drive/03498461122880262390/ACFrOgC1cH9mp9VPfEHa4hThoki6aJE30ABJsaV9cEVTWoXUAadZE8oqDq3fq-EwFKJGD3XqraaTQ0sWJGL4Lsmwn6PCq8bC9lgIw0NIwQKwCKu16dQBwAPiR6Uk6O6RG_Yn1wfyX68FiP1FWsjb3hczdmM-8ZICVoKqLnENuHLjyXIFJA0U3LDgXsYMa6Kx5Xob9hJxbbMYhR7lbad_6ZGHkx4ydWgvM_W394JLdQ==?print=true" target="_blank" rel="noopener">Open Online</a>
+      </div>
+    </div>
+
+    <!-- Media -->
+    <div id="card-media" class="stream-card" role="region" aria-labelledby="media-title">
+      <h3 id="media-title">Media Track</h3>
+      <p>Problems for media, documentation, outreach, simulation visualization and team presentation challenges.</p>
+      <div class="stream-actions">
+        <a class="btn-blue" href="Ps/Media.pdf" target="_blank" rel="noopener">Download PDF</a>
+        <a class="btn-dark" href="https://doc-04-a0-apps-viewer.googleusercontent.com/viewer/secure/pdf/vrfjqn8ufh7a08gqeqloklmvou0bpmig/bvj5k8qdck3hmfmr4da9bnjfaga1amve/1763665950000/drive/03498461122880262390/ACFrOgCBhJNhCrY12LFqtGXuAn4lz5Dhj6G54c-Gogs6ydl6xajlLReOSkNpH0pA-kKcnoi11Sni-fJvDFsMH3bzJIop37uo4ZCdMi4vDzhlrD6RDv7Z_C1c3qJfuNWTQVgTUYjgjPbviPlKVUuPxyKAv5J1ZreAhDCvpUcYUaG0Z8h0K0_Cgbx4sZV90TSk-cNiriZHZMcRF7Rskis2TODTEGvIOHKxPJ5z0q015g==?print=true" target="_blank" rel="noopener">Open Online</a>
+      </div>
+    </div>
+    <p style="opacity:.8;margin-top:18px;"></p>
+  </main>
+
+  <!-- ===== Footer ===== -->
+  <footer class="site-footer" role="contentinfo" aria-label="Footer">
+    <div class="footer-row">
+      <div class="left">
+        <p>
+          Developed by Vedang Kulkarni<br>
+          Supported By Team Titans
+        </p>
+      </div>
+
+      <div class="center">
+        <h4>Think, Build, Conquer</h4>
+      </div>
+
+      <div class="right">
+        <p>&copy; 2025 All rights reserved — Team Titans</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- particles.js library (keep your local copy in js/particles.min.js) -->
+  <script src="js/particles.min.js"></script>
+  <script>
+    /* particles.js config - subtle, lightweight */
+    (function () {
+      if (typeof particlesJS === 'undefined') return;
+
+      try { if (window.pJSDom && window.pJSDom.length) { window.pJSDom.forEach(x => x.pJS && x.pJS.fn.vendors.destroypJS && x.pJS.fn.vendors.destroypJS()); window.pJSDom = []; } } catch(e){}
+      particlesJS("ps-particles", {
+        "particles": {
+          "number": { "value": 38, "density": { "enable": true, "value_area": 900 } },
+          "color": { "value": ["#0072bd","#00a99d","#ffffff"] },
+          "shape": { "type": "circle" },
+          "opacity": {
+            "value": 0.12,
+            "random": true,
+            "anim": { "enable": true, "speed": 0.5, "opacity_min": 0.05, "sync": false }
+          },
+          "size": { "value": 6, "random": true, "anim": { "enable": false } },
+          "line_linked": { "enable": true, "distance": 180, "color": "#0f74c0", "opacity": 0.06, "width": 1 },
+          "move": { "enable": true, "speed": 1.2, "direction": "none", "random": false, "out_mode": "out", "bounce": false }
+        },
+        "interactivity": {
+          "detect_on": "canvas",
+          "events": {
+            "onhover": { "enable": true, "mode": "grab" },
+            "onclick": { "enable": true, "mode": "push" },
+            "resize": true
+          },
+          "modes": {
+            "grab": { "distance": 160, "line_linked": { "opacity": 0.15 } },
+            "bubble": { "distance": 200, "size": 8, "duration": 2, "opacity": 0.12, "speed": 3 },
+            "repulse": { "distance": 100 },
+            "push": { "particles_nb": 2 },
+            "remove": { "particles_nb": 1 }
+          }
+        },
+        "retina_detect": true
+      });
+    })();
+  </script>
+
+</body>
+</html>

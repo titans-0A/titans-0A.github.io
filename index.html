@@ -141,7 +141,7 @@
         }
 
         .hero-center-top img.logo-mini {
-            height: 36px;
+            height: 54px;
             width: auto;
             display:block;
         }
@@ -155,16 +155,42 @@
 
         /* Main ISRO title (center) */
         .isro-title {
-            font-family: 'TrajanProLocal', 'Outfit', sans-serif;
-            color: #ef6c00; /* ISRO-orange primary for visibility (you said ISRO colors) */
-            font-size: clamp(30px, 4.5vw, 64px);
-            text-align:center;
-            margin-bottom: .6rem;
-            line-height: 1.05;
-            font-weight:700;
-            text-transform: uppercase;
-            text-shadow: 0 8px 30px rgba(0,0,0,0.6);
-        }
+    font-family: 'TrajanProLocal', 'Outfit', sans-serif;
+    font-size: clamp(34px, 5vw, 72px);
+    text-align: center;
+    margin-bottom: .8rem;
+    line-height: 1.05;
+    font-weight: 800;
+    text-transform: uppercase;
+
+    /* Animated ISRO orange → blue gradient */
+    background: linear-gradient(
+        90deg,
+        #ff7a00,
+        #ff9b38,
+        #ffaa55,
+        #2d8dd8,
+        #0072bd,
+        #0094ff
+    );
+    background-size: 350%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+
+    animation: isroShift 6s ease-in-out infinite;
+
+    /* Soft glow for premium depth */
+    text-shadow:
+        0 6px 18px rgba(0,0,0,0.65),
+        0 0 22px rgba(255,122,0,0.25),
+        0 0 22px rgba(0,114,189,0.25);
+}
+
+@keyframes isroShift {
+    0% { background-position: 0%; }
+    50% { background-position: 100%; }
+    100% { background-position: 0%; }
+}
 
         .isro-title .isro-part {
             color: #0288d1; /* ISRO-blue for the blue portion — use a span if needed */
@@ -351,7 +377,7 @@
 
           <div style="text-align:center;">
               <div class="isro-title">ISRO Selection Challenge</div>
-              <div class="isro-sub">Selection for ISRO Robotics / Problem Statements — choose your stream below</div>
+              <div class="isro-sub">Register & View ISRO Robotics Problem Statements🚀</div>
 
               <div class="isro-actions" role="group" aria-label="ISRO actions">
                 <!-- Register Now button (opens new tab) -->
@@ -1020,4 +1046,5 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 

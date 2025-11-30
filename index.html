@@ -271,7 +271,26 @@
             outline: none;
             font-weight:600;
         }
+    /* FAQ Button */
+    .btn-faq {
+    background: linear-gradient(180deg, #ff8a00, #ff6a00); /* ISRO Orange gradient */
+    color: #fff;
+    padding: 12px 22px;
+    border-radius: 28px;
+    border: none;
+    font-weight: 700;
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    box-shadow: 0 8px 26px rgba(255,120,0,0.28);
+    transition: transform 0.25s ease, box-shadow 0.25s ease;
+}
 
+.btn-faq:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 12px 36px rgba(255,120,0,0.38);
+}
         /* fallback play button (hidden by default) */
         #video-play-fallback {
             position: absolute;
@@ -417,10 +436,13 @@
     Know Your Problem Statement
 </a>
  <!-- New external button placed beside it (opens in new tab) -->
-  <a id="externalInfoBtn" class="btn-register" href="FAQ.html" target="_blank" rel="noopener noreferrer" aria-label="More information (opens in new tab)" style="display:inline-flex; align-items:center;">
-    <i class="bi bi-box-arrow-up-right" style="font-size:16px"></i>
-    <span>FAQ</span>
-  </a>
+  <a id="externalInfoBtn" class="btn-faq" 
+   href="FAQ.html" 
+   target="_blank" 
+   rel="noopener noreferrer">
+    <i class="bi bi-question-circle" style="font-size:16px"></i>
+    FAQ
+</a>
 </div>
                 
                 </select>
@@ -1099,6 +1121,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

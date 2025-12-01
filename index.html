@@ -332,19 +332,27 @@
         }
         /* container for the glass card (wraps only the title) */
 .isro-glass-wrap{
-  display: inline-block;                 /* shrink to content on wide screens */
-  padding: 18px 28px;                    /* desktop padding */
-  border-radius: 18px;                   /* soft rounded corners */
-  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
-  border: 1px solid rgba(255,255,255,0.08);
-  backdrop-filter: blur(12px) saturate(1.05);
-  -webkit-backdrop-filter: blur(12px) saturate(1.05);
-  box-shadow: 0 12px 40px rgba(2,6,12,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
-  /* Keep it above the video overlay but below any floating top elements */
+  display: inline-block;
+  padding: 18px 28px;
+  border-radius: 18px;
+
+  /* ★ BLACK TRANSLUCENT GLASS */
+  background: rgba(0,0,0,0.45); /* soft black */
+  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.32));
+  border: 1px solid rgba(255,255,255,0.06);
+
+  /* subtle matte blur */
+  backdrop-filter: blur(10px) saturate(1.05);
+  -webkit-backdrop-filter: blur(10px) saturate(1.05);
+
+  /* softer, deeper glass shadow for black */
+  box-shadow:
+    0 12px 36px rgba(0,0,0,0.65),
+    inset 0 1px 0 rgba(255,255,255,0.03);
+
   z-index: calc(var(--hero-z) + 30);
-  /* smooth entrance when page loads */
   transition: transform .22s ease, box-shadow .22s ease;
-  /* prevent the glass from expanding beyond viewport */
+
   max-width: min(100%, 1100px);
   box-sizing: border-box;
   margin-inline: auto;
@@ -1231,6 +1239,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

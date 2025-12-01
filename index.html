@@ -1290,131 +1290,120 @@ Mentors: abc, xyz
     <!--  main js file  -->
     <script src="js/main.js"></script>
 
-    <!-- Inline scripting to handle robust autoplay & button behavior -->
-    <script>
-      (function(){
-        // Robust autoplay + loop enforcement and fallback
-        const v = document.getElementById('heroVideo');
-        const fallback = document.getElementById('video-play-fallback');
-
-        if (v) {
-          try { v.loop = true; } catch(e){}
-
-          function hideFallback(){ if (fallback) fallback.style.display = 'none'; }
-          function showFallback(){ if (fallback) fallback.style.display = 'block'; }
-
-          function tryPlay() {
-            if (!v) return;
-            // if already playing, hide fallback
-            if (!v.paused && !v.ended) { hideFallback(); return; }
-            v.play().then(()=> {
-              hideFallback();
-              try { v.removeAttribute('poster'); } catch(e){}
-            }).catch(err => {
-              // autoplay prevented
-              showFallback();
-              console.warn('Autoplay blocked or failed:', err);
-            });
-          }
-
-          v.addEventListener('canplaythrough', tryPlay);
-          v.addEventListener('loadeddata', tryPlay);
-          v.addEventListener('loadedmetadata', tryPlay);
-
-          v.addEventListener('ended', ()=>{
-            try { v.currentTime = 0; v.play().catch(()=>{}); } catch(e){}
-          });
-
-          if (fallback) {
-            fallback.addEventListener('click', ()=>{
-              v.muted = true;
-              v.play().then(()=> fallback.style.display = 'none').catch(()=>{});
-            });
-          }
-
-          // Try after first user gesture as well
-          window.addEventListener('click', tryPlay, { once: true, capture: true });
-          window.addEventListener('touchstart', tryPlay, { once: true, capture: true });
-
-          document.addEventListener('visibilitychange', ()=>{
-            if (document.visibilityState === 'visible') tryPlay();
-          });
-
-          // debug
-          setTimeout(()=> {
-            try { console.log('Hero video sources:', Array.from(v.querySelectorAll('source')).map(s=>s.getAttribute('src'))); } catch(e){}
-          }, 600);
-        }
-
-        // Buttons + stream selector handling
-        const registerBtn = document.getElementById('registerBtn');
-        const knowBtn = document.getElementById('knowBtn'); // important: id must be knowBtn
-        const streamSelect = document.getElementById('streamSelect');
-
-        // Ensure register opens in a new tab
-        if (registerBtn) registerBtn.setAttribute('target','_blank');
-
-      })();
+    <!-- INLINE: autoplay IIFE + countdown (single script tag) -->
 <script>
-// Countdown to 25 Dec 2025 at 23:59 IST
-document.addEventListener('DOMContentLoaded', function () {
-  // Target date: 25 Dec 2025 23:59 IST
-  const targetDate = new Date("2025-12-25T23:59:00+05:30");
+  (function(){
+    // Robust autoplay + loop enforcement and fallback
+    const v = document.getElementById('heroVideo');
+    const fallback = document.getElementById('video-play-fallback');
 
-  const el = document.getElementById("isro-countdown");
-  const rocket = document.getElementById("launch-rocket");
+    if (v) {
+      try { v.loop = true; } catch(e){}
 
-  if (!el) {
-    console.warn("Countdown element #isro-countdown not found.");
-    return;
-  }
+      function hideFallback(){ if (fallback) fallback.style.display = 'none'; }
+      function showFallback(){ if (fallback) fallback.style.display = 'block'; }
 
-  function formatNumber(n) { return String(n).padStart(2, '0'); }
-
-  function updateCountdown() {
-    const now = new Date();
-    let diff = Math.floor((targetDate - now) / 1000); // seconds
-
-    if (diff <= 0) {
-      // launched
-      el.textContent = "LAUNCH!";
-      el.classList.add('launching');
-
-      // reveal rocket and animate lift
-      if (rocket) {
-        rocket.classList.add('visible');
-        // add flame element once
-        if (!rocket.querySelector('.flame')) {
-          const f = document.createElement('div');
-          f.className = 'flame';
-          rocket.appendChild(f);
-        }
+      function tryPlay() {
+        if (!v) return;
+        if (!v.paused && !v.ended) { hideFallback(); return; }
+        v.play().then(()=> {
+          hideFallback();
+          try { v.removeAttribute('poster'); } catch(e){}
+        }).catch(err => {
+          showFallback();
+          console.warn('Autoplay blocked or failed:', err);
+        });
       }
 
-      // stop the interval
-      clearInterval(intervalId);
+      v.addEventListener('canplaythrough', tryPlay);
+      v.addEventListener('loadeddata', tryPlay);
+      v.addEventListener('loadedmetadata', tryPlay);
+
+      v.addEventListener('ended', ()=>{
+        try { v.currentTime = 0; v.play().catch(()=>{}); } catch(e){}
+      });
+
+      if (fallback) {
+        fallback.addEventListener('click', ()=>{
+          v.muted = true;
+          v.play().then(()=> fallback.style.display = 'none').catch(()=>{});
+        });
+      }
+
+      window.addEventListener('click', tryPlay, { once: true, capture: true });
+      window.addEventListener('touchstart', tryPlay, { once: true, capture: true });
+
+      document.addEventListener('visibilitychange', ()=>{
+        if (document.visibilityState === 'visible') tryPlay();
+      });
+
+      setTimeout(()=> {
+        try { console.log('Hero video sources:', Array.from(v.querySelectorAll('source')).map(s=>s.getAttribute('src'))); } catch(e){}
+      }, 600);
+    }
+
+    // Buttons (safe if not present)
+    const registerBtn = document.getElementById('registerBtn');
+    const knowBtn = document.getElementById('knowBtn');
+    const streamSelect = document.getElementById('streamSelect');
+    if (registerBtn) registerBtn.setAttribute('target','_blank');
+
+  })();
+
+  // -------------------------
+  // Countdown to 25 Dec 2025 at 23:59 IST
+  // -------------------------
+  document.addEventListener('DOMContentLoaded', function () {
+    // change this if you want another target date/time
+    const targetDate = new Date("2025-12-25T23:59:00+05:30");
+
+    const el = document.getElementById("isro-countdown");
+    const rocket = document.getElementById("launch-rocket");
+
+    if (!el) {
+      console.warn("Countdown element #isro-countdown not found.");
       return;
     }
 
-    const days = Math.floor(diff / 86400);
-    diff %= 86400;
-    const hours = Math.floor(diff / 3600);
-    diff %= 3600;
-    const mins = Math.floor(diff / 60);
-    const secs = diff % 60;
+    function pad(n){ return String(n).padStart(2,'0'); }
 
-    el.textContent = `${formatNumber(days)}:${formatNumber(hours)}:${formatNumber(mins)}:${formatNumber(secs)}`;
-  }
+    function updateCountdown() {
+      const now = new Date();
+      let diff = Math.floor((targetDate - now) / 1000); // seconds
 
-  // run once immediately then update every second
-  updateCountdown();
-  const intervalId = setInterval(updateCountdown, 1000);
-});
-</script>
-        
+      if (diff <= 0) {
+        el.textContent = "LAUNCH!";
+        el.classList.add('launching');
+        if (rocket) {
+          rocket.classList.add('visible');
+          if (!rocket.querySelector('.flame')) {
+            const f = document.createElement('div');
+            f.className = 'flame';
+            rocket.appendChild(f);
+          }
+        }
+        clearInterval(intervalId);
+        return;
+      }
+
+      const days = Math.floor(diff / 86400);
+      diff %= 86400;
+      const hours = Math.floor(diff / 3600);
+      diff %= 3600;
+      const mins = Math.floor(diff / 60);
+      const secs = diff % 60;
+
+      el.textContent = `${pad(days)}:${pad(hours)}:${pad(mins)}:${pad(secs)}`;
+    }
+
+    updateCountdown();
+    const intervalId = setInterval(updateCountdown, 1000);
+  });
+</script>     
 </body>
 
 </html>
+
 
 
 

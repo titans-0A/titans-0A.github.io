@@ -2,6 +2,7 @@
 <html lang="en">
 
 <head>
+    <link href="https://fonts.cdnfonts.com/css/nasalization-2" rel="stylesheet">
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -155,42 +156,52 @@
 
         /* Main ISRO title (center) */
        .isro-title {
-    font-family: 'TrajanProLocal', 'Outfit', sans-serif;
-
-    /* Increase visual thickness */
-    font-weight: 900; 
-    letter-spacing: 1px;
-
-    font-size: clamp(34px, 5vw, 72px);
-    text-align: center;
-    margin-bottom: .8rem;
-    line-height: 1.05;
+    font-family: 'Nasalization', 'Outfit', sans-serif;
+    font-weight: 800;
     text-transform: uppercase;
+    letter-spacing: 2.6px;
 
-    /* ISRO orange → blue animated gradient */
+    font-size: clamp(38px, 6.5vw, 82px);
+    text-align: center;
+    margin: 0;
+    line-height: 1.08;
+
+    /* ★ 24K ULTRA GOLD MULTI-LAYER METALLIC GRADIENT */
     background: linear-gradient(
         90deg,
-        #ff7a00,
-        #ff9b38,
-        #ffaa55,
-        #2d8dd8,
-        #0072bd,
-        #0094ff
+        #fff7c7 0%,     /* bright highlight */
+        #ffe08a 12%,    /* polished gold */
+        #f5c14b 25%,    /* deep gold */
+        #d6a031 40%,    /* shadow gold */
+        #b8872b 55%,    /* molten gold */
+        #f2cf73 70%,    /* highlight rising back */
+        #ffe9b5 85%,    /* bright reflection */
+        #fff7c7 100%    /* full shine reset */
     );
-    background-size: 350%;
+    background-size: 250% 250%;
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 
-    animation: isroShift 6s ease-in-out infinite;
-
-    /* Fake stroke effect to make gradient text visually thicker */
-    -webkit-text-stroke: 1.2px rgba(255,255,255,0.15);
-
-    /* Stronger glow to increase bold appearance */
+    /* ★ GLOW + DEPTH + METAL REFLECTION */
     text-shadow:
-        0 0 14px rgba(0,0,0,0.7),
-        0 0 18px rgba(255,122,0,0.25),
-        0 0 18px rgba(0,114,189,0.25);
+        0 2px 4px rgba(0,0,0,0.65),
+        0 4px 16px rgba(0,0,0,0.55),
+        0 0 18px rgba(255, 215, 140, 0.45),
+        0 0 45px rgba(255, 210, 120, 0.35),
+        0 0 70px rgba(255, 195, 90, 0.30);
+
+    /* ★ 24K soft engraved edge */
+    -webkit-text-stroke: 1px rgba(255,215,160,0.55);
+
+    /* ★ smooth reflective shimmer */
+    animation: ultraGoldShine 5.5s ease-in-out infinite;
+}
+
+/* ★ sweeping metallic shine motion */
+@keyframes ultraGoldShine {
+    0%   { background-position: 0% 50%; }
+    50%  { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
 }
 
 @keyframes isroShift {
@@ -1220,6 +1231,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

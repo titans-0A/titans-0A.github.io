@@ -1355,10 +1355,8 @@ Mentors: abc, xyz
         if (registerBtn) registerBtn.setAttribute('target','_blank');
 
       })();
-    </script>
 <script>
 // Countdown to 25 Dec 2025 at 23:59 IST
-<script>
 document.addEventListener('DOMContentLoaded', function () {
   // Target date: 25 Dec 2025 23:59 IST
   const targetDate = new Date("2025-12-25T23:59:00+05:30");
@@ -1413,37 +1411,11 @@ document.addEventListener('DOMContentLoaded', function () {
   const intervalId = setInterval(updateCountdown, 1000);
 });
 </script>
+        
 </body>
 
 </html>
 
-<!--
-Notes & checklist (kept as comments so nothing breaks):
-- Changes made:
-  1. Wrapped the hero video in .hero-video-wrap and positioned it such that the fixed header is never covered.
-  2. Centered the video using object-fit: cover; and absolute centering transform.
-  3. Added overlay and particles stacking so particles sit above the video but below hero content.
-  4. Added .hero-center-content overlay which contains the ISRO title and buttons (Register / Know Problem Statement).
-  5. Made "Know Problem Statement" anchor use id="knowBtn" (previously invalid id contained a dot).
-  6. Footer "Created by" edited to only show Vedang Kulkarni (Milind removed).
-  7. Implemented robust autoplay/loop JS with fallback button for browsers that block autoplay.
-  8. Problem-statement button will navigate to problem-statement.html?stream=<selected> (create problem-statement.html separately).
-  9. Problem statement button style is a black curved button with white text as requested.
-
-- External files required:
-  * images/team/team-working-timelapse.mp4  (rename to no-spaces recommended)
-  * images/team/video-poster.jpg (optional poster image)
-  * particles.min.js (if you use particles)
-  * css/style.css (your main stylesheet)
-  * fonts/trajan-pro-bold.woff (optional)
-  * problem-statement.html (you asked this will be created separately)
-
-- Accessibility:
-  * buttons/links have aria labels/roles in overlay.
-  * video is muted and autoplay-friendly; fallback shows a tap button if autoplay is blocked.
-
-End of file.
--->
 
 
 

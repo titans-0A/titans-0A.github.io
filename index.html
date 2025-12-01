@@ -453,55 +453,130 @@
 /* If your page uses pointer-events none overlays, ensure the glass is clickable */
 .isro-glass-wrap,
 .isro-glass-wrap * { pointer-events: auto; }
-/* ROCKET LAUNCH COUNTDOWN — digital, glowing, bold */
+/* timer wrapper */
 .isro-timer-wrap {
   margin-top: 18px;
   text-align: center;
 }
 
+/* label */
 .isro-timer-label {
-  font-family: 'Nasalization', sans-serif;
-  font-size: 18px;
+  font-family: 'Nasalization', 'Outfit', sans-serif;
+  font-size: 14px;
   letter-spacing: 3px;
   color: #ffb347;
-  margin-bottom: 6px;
+  margin-bottom: 8px;
   text-transform: uppercase;
 }
 
+/* main timer */
 .isro-timer {
-  font-family: 'Nasalization', sans-serif;
-  font-size: 40px;
-  letter-spacing: 4px;
+  font-family: 'Nasalization', 'Outfit', sans-serif;
+  font-size: 36px;
+  letter-spacing: 6px;
   font-weight: 700;
 
-  /* DIGITAL ROCKET LOOK */
+  /* digital, rocket-friendly look (subtle glow, not neon) */
   color: #ffffff;
   text-shadow:
-      0 0 10px #00eaff,
-      0 0 18px #00eaff,
-      0 0 28px rgba(0, 200, 255, 0.6);
+    0 0 6px rgba(0,180,255,0.12),
+    0 0 12px rgba(0,180,255,0.08);
 
-  background: rgba(255,255,255,0.05);
-  padding: 12px 24px;
-  border-radius: 12px;
+  background: rgba(255,255,255,0.03);
+  padding: 10px 20px;
+  border-radius: 10px;
   display: inline-block;
-  border: 1px solid rgba(255,255,255,0.12);
-
-  /* Subtle flicker for rocket launch realism */
-  animation: flicker 1.5s infinite alternate ease-in-out;
+  border: 1px solid rgba(255,255,255,0.06);
+  min-width: 240px;
+  box-sizing: border-box;
 }
 
-@keyframes flicker {
-  0% { opacity: 0.85; text-shadow: 0 0 10px #00eaff; }
-  100% { opacity: 1; text-shadow: 0 0 20px #00eaff; }
+/* smaller phones */
+@media (max-width: 420px) {
+  .isro-timer { font-size: 24px; min-width: 200px; letter-spacing: 3px; padding:8px 14px; }
+  .isro-timer-label { font-size: 12px; }
 }
 
-/* RESPONSIVE */
-@media (max-width: 600px) {
-  .isro-timer {
-    font-size: 28px;
-    padding: 10px 18px;
-  }
+/* LAUNCH styles */
+#isro-countdown.launching {
+  color: #ffd166;
+  text-shadow:
+    0 0 18px rgba(255,193,7,0.45),
+    0 0 36px rgba(255,140,0,0.25);
+  transform: scale(1.06);
+  transition: transform 300ms ease, text-shadow 300ms ease, color 300ms ease;
+}
+
+/* simple rocket shape (CSS) that lifts on launch */
+.launch-rocket {
+  width: 48px;
+  height: 80px;
+  margin: 12px auto 0;
+  background: linear-gradient(180deg,#d1b26f,#b58f3a);
+  border-radius: 14px 14px 8px 8px;
+  position: relative;
+  opacity: 0;
+  transform: translateY(0);
+  transition: transform 900ms cubic-bezier(.2,.8,.2,1), opacity 600ms ease;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 -6px 12px rgba(255,255,255,0.06);
+}
+
+/* rocket nose */
+.launch-rocket::before {
+  content: '';
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  top: -14px;
+  width: 34px;
+  height: 28px;
+  background: linear-gradient(180deg,#ffd5a1,#ffb36d);
+  border-radius: 50% 50% 10% 10%;
+  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
+}
+
+/* fins */
+.launch-rocket::after {
+  content: '';
+  position: absolute;
+  bottom: 6px;
+  left: 6px;
+  width: 36px;
+  height: 12px;
+  background: linear-gradient(90deg,#b36f2b,#8a5b20);
+  border-radius: 2px;
+  transform: rotate(-10deg);
+  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
+}
+
+/* visible + lift when launched */
+.launch-rocket.visible {
+  opacity: 1;
+  transform: translateY(-180px) scale(0.95);
+}
+
+/* small flame (appears on launch) */
+.launch-rocket .flame {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: -18px;
+  width: 18px;
+  height: 18px;
+  background: radial-gradient(circle at 30% 30%, #fff2a8 0%, #ffb347 35%, #ff5a00 70%, #b71c00 100%);
+  border-radius: 50%;
+  filter: blur(0.6px);
+  opacity: 0;
+  transition: opacity 220ms ease;
+}
+
+/* flame visible during launch */
+.launch-rocket.visible .flame { opacity: 1; animation: flickerFlame 220ms infinite; }
+
+@keyframes flickerFlame {
+  0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
+  50% { transform: translateX(-50%) translateY(4px) scale(0.95); opacity: 0.85; }
+  100% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
 }
     </style>
 
@@ -603,9 +678,11 @@
    <div class="isro-title">ISRO Robotics Challenge 2026 - Team Selection Drive</div>
                <div class="isro-sub">  Solve curated problems, learn, and compete. Shortlisted candidates join Team Titans</div>
               <div class="isro-sub">Register & View Problem Statements🚀</div>
-<div class="isro-timer-wrap">
-  <div class="isro-timer-label">T-Minus</div>
-  <div id="isro-countdown" class="isro-timer">00:00:00:00</div>
+<div class="isro-timer-wrap" aria-live="polite" aria-atomic="true">
+  <div class="isro-timer-label">T-MINUS</div>
+  <div id="isro-countdown" class="isro-timer" role="timer">00:00:00:00</div>
+  <!-- optional rocket (hidden until LAUNCH) -->
+  <div id="launch-rocket" class="launch-rocket" aria-hidden="true" title="Rocket"></div>
 </div>
               <div class="isro-actions" role="group" aria-label="ISRO actions">
                 <!-- Register Now button (opens new tab) -->
@@ -1282,35 +1359,59 @@ Mentors: abc, xyz
 <script>
 // Countdown to 25 Dec 2025 at 23:59 IST
 <script>
-const targetDate = new Date("2025-12-25T23:59:00+05:30");
+document.addEventListener('DOMContentLoaded', function () {
+  // Target date: 25 Dec 2025 23:59 IST
+  const targetDate = new Date("2025-12-25T23:59:00+05:30");
 
-function updateCountdown() {
-  const now = new Date();
-  const diff = targetDate - now;
   const el = document.getElementById("isro-countdown");
+  const rocket = document.getElementById("launch-rocket");
 
-  if (diff <= 0) {
-    el.textContent = "LAUNCH!";
-    el.style.color = "#ff4444";
-    el.style.textShadow = "0 0 25px #ff0000";
+  if (!el) {
+    console.warn("Countdown element #isro-countdown not found.");
     return;
   }
 
-  const s = Math.floor(diff / 1000);
-  const days = Math.floor(s / 86400);
-  const hours = Math.floor((s % 86400) / 3600);
-  const mins = Math.floor((s % 3600) / 60);
-  const secs = s % 60;
+  function formatNumber(n) { return String(n).padStart(2, '0'); }
 
-  el.textContent =
-    `${String(days).padStart(2,'0')}:` +
-    `${String(hours).padStart(2,'0')}:` +
-    `${String(mins).padStart(2,'0')}:` +
-    `${String(secs).padStart(2,'0')}`;
-}
+  function updateCountdown() {
+    const now = new Date();
+    let diff = Math.floor((targetDate - now) / 1000); // seconds
 
-setInterval(updateCountdown, 1000);
-updateCountdown();
+    if (diff <= 0) {
+      // launched
+      el.textContent = "LAUNCH!";
+      el.classList.add('launching');
+
+      // reveal rocket and animate lift
+      if (rocket) {
+        rocket.classList.add('visible');
+        // add flame element once
+        if (!rocket.querySelector('.flame')) {
+          const f = document.createElement('div');
+          f.className = 'flame';
+          rocket.appendChild(f);
+        }
+      }
+
+      // stop the interval
+      clearInterval(intervalId);
+      return;
+    }
+
+    const days = Math.floor(diff / 86400);
+    diff %= 86400;
+    const hours = Math.floor(diff / 3600);
+    diff %= 3600;
+    const mins = Math.floor(diff / 60);
+    const secs = diff % 60;
+
+    el.textContent = `${formatNumber(days)}:${formatNumber(hours)}:${formatNumber(mins)}:${formatNumber(secs)}`;
+  }
+
+  // run once immediately then update every second
+  updateCountdown();
+  const intervalId = setInterval(updateCountdown, 1000);
+});
 </script>
 </body>
 
@@ -1343,6 +1444,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

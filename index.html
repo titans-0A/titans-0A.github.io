@@ -338,40 +338,42 @@
         /* container for the glass card (wraps only the title) */
 .isro-glass-wrap{
   display: inline-block;
-  padding: 18px 28px;
-  border-radius: 18px;
+  padding: 22px 32px;
+  border-radius: 20px;
 
-  /* ★ BLACK TRANSLUCENT GLASS */
-  background: rgba(0,0,0,0.45); /* soft black */
-  background: linear-gradient(180deg, rgba(0,0,0,0.55), rgba(0,0,0,0.32));
-  border: 1px solid rgba(255,255,255,0.06);
+  /* TRUE BLACK MATTE GLASS (fixed) */
+  background: rgba(0,0,0,0.32);              /* soft matte base */
+  background: linear-gradient(
+      180deg,
+      rgba(0,0,0,0.38),
+      rgba(0,0,0,0.22)
+  );
 
-  /* subtle matte blur */
-  backdrop-filter: blur(10px) saturate(1.05);
-  -webkit-backdrop-filter: blur(10px) saturate(1.05);
+  border: 1px solid rgba(255,255,255,0.04);  /* soft border */
 
-  /* softer, deeper glass shadow for black */
+  /* Remove heavy blur → use subtle matte blur */
+  backdrop-filter: blur(6px) saturate(1.0);
+  -webkit-backdrop-filter: blur(6px) saturate(1.0);
+
+  /* FIX: NO deep shadows that glow behind text */
   box-shadow:
-    0 12px 36px rgba(0,0,0,0.65),
-    inset 0 1px 0 rgba(255,255,255,0.03);
+    0 6px 20px rgba(0,0,0,0.55),
+    inset 0 1px 0 rgba(255,255,255,0.02);
 
-  z-index: calc(var(--hero-z) + 30);
-  transition: transform .22s ease, box-shadow .22s ease;
-
+  /* No expansion */
   max-width: min(100%, 1100px);
-  box-sizing: border-box;
   margin-inline: auto;
   text-align: center;
+  transition: 0.25s ease;
 }
 
-/* subtle hover/lift on pointer-capable devices */
+/* Light hover */
 @media (hover: hover) {
   .isro-glass-wrap:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 20px 60px rgba(2,6,12,0.68), inset 0 1px 0 rgba(255,255,255,0.02);
+    transform: translateY(-2px);
+    box-shadow: 0 10px 28px rgba(0,0,0,0.55);
   }
 }
-
 /* make the title sit nicely inside the card (uses your existing .isro-title) */
 .isro-glass-wrap .isro-title{
   margin: 0;                 /* remove any extra margin */
@@ -1244,6 +1246,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

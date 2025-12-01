@@ -41,48 +41,7 @@
 
     <!-- Local overrides & hero/video stacking fixes -->
     <style>
-        .isro-glass-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-
-  padding: 14px 34px;                  /* comfortable Apple spacing */
-  border-radius: 28px;                 /* Apple pill curve */
-  
-  /* True Apple glass: low opacity neutral layer + heavy blur */
-  background: rgba(255, 255, 255, 0.18);
-  -webkit-backdrop-filter: blur(22px) saturate(180%);
-  backdrop-filter: blur(22px) saturate(180%);
-
-  /* Subtle border like macOS control center panels */
-  border: 1px solid rgba(255, 255, 255, 0.28);
-
-  /* Soft depth shadow (Apple style) */
-  box-shadow:
-    0 8px 26px rgba(0, 0, 0, 0.22),
-    inset 0 0 8px rgba(255,255,255,0.15);
-
-  margin: 0 auto 14px;
-  max-width: calc(100% - 140px);
-  text-align: center;
-}
-.isro-glass-wrap .isro-title {
-  margin: 0;
-  font-weight: 900;
-  letter-spacing: 1px;
-
-  /* Remove strong stroke so Apple glass looks cleaner */
-  -webkit-text-stroke: 0px transparent;
-
-  text-shadow:
-    0 4px 12px rgba(0,0,0,0.35);
-}
-
-@keyframes fadeInGlass {
-    from { opacity: 0; transform: scale(0.96); }
-    to   { opacity: 1; transform: scale(1); }
-}
-        /* Local font (if you used a Trajan-like previously) - optional */
+/* Local font (if you used a Trajan-like previously) - optional */
         @font-face {
             font-family: 'TrajanProLocal';
             src: url('fonts/trajan-pro-bold.woff') format('woff');
@@ -456,8 +415,8 @@
           </div>
 
             <div style="text-align:center;">
-              <div class="isro-glass-wrap">
-   <div class="isro-title">ISRO Selection Challenge</div>
+              <div class="isro-title-wrap">
+   <div class="isro-title">ISRO Robotics Challenge — 2026 </div>
                <div class="isro-sub">  Welcome to Team Titans ISRO Robotics Team Selection Challenge 2026 — solve curated problems, learn, and compete. Shortlisted candidates join Team Titans</div>
               <div class="isro-sub">Register & View Problem Statements🚀</div>
 
@@ -1165,6 +1124,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

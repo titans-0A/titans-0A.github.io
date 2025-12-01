@@ -319,6 +319,102 @@
             .isro-sub { font-size: 14px; }
             .hero-video-wrap { height: calc(100vh - 64px); }
         }
+        /* container for the glass card (wraps only the title) */
+.isro-glass-wrap{
+  display: inline-block;                 /* shrink to content on wide screens */
+  padding: 18px 28px;                    /* desktop padding */
+  border-radius: 18px;                   /* soft rounded corners */
+  background: linear-gradient(180deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));
+  border: 1px solid rgba(255,255,255,0.08);
+  backdrop-filter: blur(12px) saturate(1.05);
+  -webkit-backdrop-filter: blur(12px) saturate(1.05);
+  box-shadow: 0 12px 40px rgba(2,6,12,0.6), inset 0 1px 0 rgba(255,255,255,0.02);
+  /* Keep it above the video overlay but below any floating top elements */
+  z-index: calc(var(--hero-z) + 30);
+  /* smooth entrance when page loads */
+  transition: transform .22s ease, box-shadow .22s ease;
+  /* prevent the glass from expanding beyond viewport */
+  max-width: min(100%, 1100px);
+  box-sizing: border-box;
+  margin-inline: auto;
+  text-align: center;
+}
+
+/* subtle hover/lift on pointer-capable devices */
+@media (hover: hover) {
+  .isro-glass-wrap:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 20px 60px rgba(2,6,12,0.68), inset 0 1px 0 rgba(255,255,255,0.02);
+  }
+}
+
+/* make the title sit nicely inside the card (uses your existing .isro-title) */
+.isro-glass-wrap .isro-title{
+  margin: 0;                 /* remove any extra margin */
+  padding: 0;
+  display: block;
+  /* ensure gradient text preserves transparency */
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+
+/* responsive adjustments */
+
+/* Large laptop / small desktop - slightly smaller padding */
+@media (max-width: 1366px) {
+  .isro-glass-wrap { padding: 16px 24px; border-radius:16px; }
+  .isro-glass-wrap .isro-title { font-size: clamp(30px, 5.2vw, 64px); }
+}
+
+/* iPad and tablets */
+@media (max-width: 1024px) {
+  .isro-glass-wrap {
+    display: inline-block;
+    padding: 14px 20px;
+    border-radius: 14px;
+    backdrop-filter: blur(10px) saturate(1.03);
+  }
+  .isro-glass-wrap .isro-title { font-size: clamp(26px, 6.4vw, 48px); line-height:1.04; }
+}
+
+/* Small phones — make the glass full-width (with comfortable side padding) */
+@media (max-width: 640px) {
+  .isro-glass-wrap{
+    display: block;                 /* block so it fills the container nicely */
+    width: calc(100% - 40px);       /* 20px side gutters */
+    padding: 12px 16px;
+    border-radius: 12px;
+    margin-left: 20px;
+    margin-right: 20px;
+    text-align: center;
+  }
+  .isro-glass-wrap .isro-title { 
+    font-size: clamp(20px, 8.5vw, 36px);
+    line-height: 1.02;
+    word-break: break-word;
+  }
+  /* reduce glow on small devices for better readability */
+  .isro-glass-wrap .isro-title {
+    text-shadow:
+      0 6px 14px rgba(0,0,0,0.55),
+      0 0 12px rgba(255,122,0,0.18),
+      0 0 12px rgba(0,114,189,0.18);
+    -webkit-text-stroke: 0.9px rgba(255,255,255,0.10);
+  }
+}
+
+/* Accessibility: high-contrast mode tweak */
+@media (prefers-contrast: more) {
+  .isro-glass-wrap {
+    background: rgba(0,0,0,0.48);
+    border-color: rgba(255,255,255,0.12);
+    box-shadow: 0 16px 48px rgba(0,0,0,0.8);
+  }
+}
+
+/* If your page uses pointer-events none overlays, ensure the glass is clickable */
+.isro-glass-wrap,
+.isro-glass-wrap * { pointer-events: auto; }
     </style>
 
     <title> Team-Titans </title>
@@ -1124,6 +1220,7 @@ Notes & checklist (kept as comments so nothing breaks):
 
 End of file.
 -->
+
 
 
 

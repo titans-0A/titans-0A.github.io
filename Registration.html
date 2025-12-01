@@ -1,0 +1,395 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>ISRO Robotics Challenge 2026 — Team Titans Selection</title>
+
+  <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;600;700;900&display=swap" rel="stylesheet">
+
+  <style>
+    :root{
+      --bg1:#02040A;
+      --bg2:#0A1528;
+      --muted:rgba(255,255,255,0.72);
+      --glass:rgba(255,255,255,0.04);
+      --border:rgba(255,255,255,0.08);
+      --orange:#ff7a00;
+      --blue:#0072bd;
+      --text:#ffffff;
+      --radius:18px;
+      --max:1120px;
+    }
+
+    *{box-sizing:border-box;margin:0;padding:0;}
+    body{
+      font-family:Outfit,system-ui,-apple-system;
+      background:linear-gradient(180deg,var(--bg1),var(--bg2));
+      color:var(--text);
+      -webkit-font-smoothing:antialiased;
+      padding-bottom:60px;
+    }
+    a{text-decoration:none;color:inherit;}
+    img{display:block;max-width:100%}
+
+    /* skip link for keyboard users */
+    .skip-link{
+      position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden;
+    }
+    .skip-link:focus{position:fixed;left:18px;top:18px;background:#fff;color:#000;padding:8px 12px;border-radius:8px;width:auto;height:auto;z-index:9999}
+
+    /* HEADER */
+    header{
+      position:sticky;top:0;z-index:100;
+      backdrop-filter:blur(14px);
+      background:rgba(0,0,0,0.35);
+      border-bottom:1px solid rgba(255,255,255,0.04);
+    }
+    .header-inner{
+      max-width:var(--max);margin:auto;
+      padding:14px 22px;
+      display:flex;justify-content:space-between;align-items:center;
+    }
+    nav{display:flex;gap:14px;align-items:center;}
+    .btn{
+      padding:8px 16px;
+      border-radius:999px;
+      font-weight:600;
+      border:1px solid transparent;
+      transition:0.2s ease;
+    }
+    .btn:hover{opacity:0.92;}
+    .btn-ghost {
+  background: #000;                  /* solid black pill */
+  color: #fff;                       /* white text */
+  border: 1px solid rgba(255,255,255,0.20);
+  padding: 8px 18px;
+  border-radius: 999px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.btn-ghost:hover {
+  background: #111;                  /* subtle hover */
+  border-color: rgba(255,255,255,0.35);
+}
+    .btn-primary{
+      background:linear-gradient(180deg,#2c7bff,#1a62e6);
+      color:white;
+      font-weight:700;
+    }
+    .btn-orange{
+      background:linear-gradient(90deg,var(--orange),#ffa94d);
+      color:black;
+      font-weight:700;
+    }
+
+    /* HERO */
+    .hero{
+      max-width:var(--max);
+      margin:70px auto 20px;
+      padding:0 22px;
+      text-align:left;
+      display:flex;
+      flex-direction:column;
+      gap:10px;
+    }
+    .hero-title{
+      font-size:clamp(32px,6vw,62px);
+      font-weight:900;
+      line-height:1.05;
+      background:linear-gradient(90deg,var(--orange),var(--blue));
+      -webkit-background-clip:text;
+      -webkit-text-fill-color:transparent;
+    }
+    .hero-sub{
+      font-size:17px;
+      color:var(--muted);
+      max-width:680px;
+      margin-top:6px;
+    }
+
+    /* PERFECT UNSTOP HORIZONTAL TIMELINE */
+/* wrapper gives page padding so timeline's internal width matches dot layout */
+:root{
+  --orange:#ff7a00;
+  --blue:#0072bd;
+  --muted: rgba(255,255,255,0.72);
+}
+
+/* wrapper keeps page padding but timeline inside has no extra horizontal padding */
+.timeline-wrap {
+  max-width: 1100px;
+  margin: 50px auto;
+  padding: 0 22px;   /* page padding */
+  box-sizing: border-box;
+}
+
+/* timeline: use --count to size items */
+.timeline {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  width: 100%;
+  padding: 0; /* important: no left/right padding here */
+  box-sizing: border-box;
+
+  /* must set --count on the element (inline style or CSS) */
+  --count: 5;        /* fallback if not provided inline */
+  --dot-size: 22px;  /* tune dot size here */
+}
+
+/* ensure each milestone takes exactly 1/count width */
+.milestone {
+  flex: 0 0 calc(100% / var(--count));
+  text-align: center;
+  position: relative;
+  box-sizing: border-box;
+  min-width: 0; /* avoid overflow glitches */
+}
+
+/* single continuous line between first & last dot */
+.timeline::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--dot-size) / 2); /* center the line under dot */
+  /* start at center of first slot, end at center of last slot */
+  left: calc((100% / var(--count)) / 2);
+  right: calc((100% / var(--count)) / 2);
+  height: 3px;
+  background: rgba(255,255,255,0.18);
+  z-index: 1;
+  border-radius: 999px;
+}
+
+/* dot sits above the line */
+.dot {
+  width: var(--dot-size);
+  height: var(--dot-size);
+  border-radius: 50%;
+  margin: 0 auto;
+  position: relative;
+  z-index: 2;
+  background: linear-gradient(180deg, var(--orange), var(--blue));
+  box-shadow: 0 4px 14px rgba(0,0,0,0.6);
+}
+
+/* text */
+.milestone h4 { margin-top: 14px; font-size: 15px; font-weight: 800; }
+.milestone p  { margin-top: 4px;  font-size: 13px; color: var(--muted); }
+
+/* keep horizontal layout on small screens, allow scrolling */
+@media (max-width: 780px) {
+  .timeline {
+    overflow-x: auto;
+    scrollbar-width: none;
+  }
+  .timeline::-webkit-scrollbar { display: none; }
+
+  /* allow items to be scrollable; keep same width calculation */
+  .milestone { min-width: calc(100% / var(--count)); scroll-snap-align: center; }
+  .timeline { scroll-snap-type: x mandatory; }
+}
+
+    /* CARD SECTIONS */
+    .section{
+      max-width:var(--max);
+      margin:30px auto;
+      padding:22px;
+      background:var(--glass);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      backdrop-filter:blur(14px);
+    }
+    .section h3{
+      font-size:22px;font-weight:800;margin-bottom:10px;
+    }
+    .section p, .section li{
+      color:var(--muted);
+      font-size:15px;
+      line-height:1.6;
+    }
+    ul{margin-top:8px;padding-left:20px;}
+
+    /* FOOTER */
+    .site-footer {
+      background: var(--footer-bg);
+      border-top: 1px solid rgba(255,255,255,0.04);
+      color: #e6e6e6;
+      padding: 18px 20px;
+      margin-top: 36px;
+      backdrop-filter: blur(6px);
+    }
+    .site-footer .footer-row {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:12px;
+      max-width: 1200px;
+      margin: 0 auto;
+      flex-wrap:wrap;
+    }
+    .site-footer .left, .site-footer .center, .site-footer .right {
+      flex: 1 1 200px;
+      min-width: 180px;
+    }
+    .site-footer .left { text-align:left; }
+    .site-footer .center { text-align:center; }
+    .site-footer .right { text-align:right; }
+
+    .site-footer .center h4 {
+      margin:0;
+      font-size:18px;
+      letter-spacing: .8px;
+      font-weight:800;
+      color: #ffffff;
+    }
+    .site-footer .left p, .site-footer .right p {
+      margin:0;
+      font-size:14px;
+      opacity:0.92;
+      line-height:1.3;
+    }
+
+    @media (max-width:720px) {
+      .site-footer .left, .site-footer .center, .site-footer .right { text-align:center; min-width: 100%; }
+      .site-footer .right { margin-top:8px; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- skip link -->
+  <a class="skip-link" href="#main-content">Skip to content</a>
+
+  <!-- HEADER -->
+  <header>
+    <div class="header-inner">
+
+      <div style="display:flex;align-items:center;gap:10px">
+        <img src="images/isro.jpg" alt="ISRO logo" style="height:40px">
+        <strong style="font-size:14px;color:var(--muted)">ISRO Robotics Challenge 2026</strong>
+      </div>
+
+      <nav aria-label="Primary" role="navigation">
+        <a class="btn btn-ghost" href="problem-statement.html" target="_blank" rel="noopener noreferrer">Problem Statement</a>
+        <a class="btn btn-orange" href="https://drive.google.com/file/d/1xWe4eY4CYAam2CBqp8jjRV1NtHDsE85O/view?usp=share_link" target="_blank" rel="noopener noreferrer">FAQ</a>
+        <a class="btn btn-primary" href="https://forms.gle/J4VHdqU38hHSAfxo7" target="_blank" rel="noopener noreferrer">Register</a>
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- HERO -->
+  <main id="main-content">
+    <section class="hero" aria-labelledby="page-heading">
+      <h1 id="page-heading" class="hero-title">ISRO Robotics Challenge — 2026</h1>
+      <p class="hero-sub">
+        Compete for a spot on Team Titans. Solve real engineering challenges, showcase your skills, and earn your position through creativity, problem-solving, and consistency.
+      </p>
+    </section>
+
+    <!-- UNSTOP STYLE TIMELINE -->
+<!-- timeline wrapper provides page padding -->
+<!-- timeline wrapper (keeps page padding) -->
+<div class="timeline-wrap">
+  <!-- set --count to number of milestones -->
+  <section class="timeline" style="--count:5;">
+    <div class="milestone">
+      <div class="dot"></div>
+      <h4>30 Nov</h4>
+      <p>Registrations Begin</p>
+    </div>
+
+    <div class="milestone">
+      <div class="dot"></div>
+      <h4>25 Dec</h4>
+      <p>Submission Ends</p>
+    </div>
+
+    <div class="milestone">
+      <div class="dot"></div>
+      <h4>05 Jan</h4>
+      <p>Result Day !</p>
+      <p>Top 40 will be selected for the interviews</p>
+    </div>
+
+    <div class="milestone">
+      <div class="dot"></div>
+      <h4>09 Jan</h4>
+      <p>Interview Round</p>
+    </div>
+
+    <div class="milestone">
+      <div class="dot"></div>
+      <h4>12 Jan</h4>
+      <p>Team Titans 2026 Edition will be Announced</p>
+    </div>
+  </section>
+</div>
+
+    <!-- ABSTRACT -->
+    <div class="section" aria-labelledby="abstract-heading">
+      <h3 id="abstract-heading">About</h3>
+      <p>
+        Welcome to the official Team Titans Selection Challenge for ISRO Robotics Challenge 2026! 
+        In this challenge, you will be given a problem statement along with curated learning resources to guide your journey.
+        The selection process is designed to test your skills, problem-solving ability, creativity, consistency, and passion for robotics.
+        After completing this challenge, shortlisted candidates will be invited to join Team Titans.
+      </p>
+    </div>
+
+    <!-- PARTICIPATE -->
+    <div class="section" aria-labelledby="participate-heading">
+      <h3 id="participate-heading">How to Participate</h3>
+      <ul>
+        <li>Fill the Registration Form:
+Click the provided Register button for Registration for the challenge.
+</li>
+        <li>Choose Your Domain:
+Select your preferred domain: Mechanical, Electronics, Software or Media.
+</li>
+        <li>Access the Problem Statement:
+Download the domain-specific problem statement using the provided button on the top.
+</li>
+        <li>Access the Learning Resources:
+Use the curated learning resources to guide your progress throughout the challenge(provided in PS button).
+</li>
+      </ul>
+    </div>
+
+    <!-- WHAT WE WANT -->
+    <div class="section" aria-labelledby="lookingfor-heading">
+      <h3 id="lookingfor-heading">What We're Looking For</h3>
+      <ul>
+        <li>Consistency and dedication</li>
+        <li>Strong problem-solving skills</li>
+        <li>Creativity and innovation</li>
+        <li>Ability to learn independently</li>
+        <li>Teamwork and communication</li>
+      </ul>
+    </div>
+  </main>
+
+  <!-- FOOTER -->
+<footer class="site-footer" role="contentinfo" aria-label="Footer">
+    <div class="footer-row">
+      <div class="left">
+        <p>
+          Developed by Vedang Kulkarni<br>
+          Supported By Team Titans
+        </p>
+      </div>
+
+      <div class="center">
+        <h4>Think, Build, Conquer</h4>
+      </div>
+
+      <div class="right">
+        <p>&copy; 2025 All rights reserved — Team Titans</p>
+      </div>
+    </div>
+  </footer>
+</body>
+</html>

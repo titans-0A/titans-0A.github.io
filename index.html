@@ -43,13 +43,43 @@
 
     <!-- Local overrides & hero/video stacking fixes -->
     <style>
-        .isro-extension-note {
-  margin-top: 8px;
-  font-family: 'Outfit', sans-serif;
-  font-size: 13px;
-  letter-spacing: 0.4px;
-  color: rgba(255,255,255,0.75);
-  text-align: center;
+        /* RED MOVING STRIP (T-MINUS STYLE) */
+.isro-marquee-wrap {
+  position: absolute;
+  top: -22px;                 /* sits just above Think, Build, Conquer */
+  left: 0;
+  right: 0;
+  overflow: hidden;
+  height: 22px;
+  pointer-events: none;
+}
+
+.isro-marquee {
+  font-family: 'Nasalization', 'Outfit', sans-serif;
+  font-size: 12px;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+
+  color: #fff;
+  background: linear-gradient(90deg, #c62828, #e53935);
+  padding: 4px 18px;
+  border-radius: 4px;
+
+  display: inline-block;
+  white-space: nowrap;
+
+  /* slow smooth movement */
+  animation: marqueeMove 22s linear infinite;
+}
+
+/* smooth right → left movement */
+@keyframes marqueeMove {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-120%);
+  }
 }
 /* Local font (if you used a Trajan-like previously) - optional */
         @font-face {
@@ -614,6 +644,11 @@
           <!-- top-left miniature Titans branding inside hero -->
           <div class="hero-center-top" aria-hidden="true">
               <img src="images/logo/titans_logo_white/titans_logo_white.png" alt="Titans" class="logo-mini" />
+              <div class="isro-marquee-wrap">
+  <div class="isro-marquee">
+    Registration Extended till 30 Dec
+  </div>
+</div>
               <div class="titans-mini">Think, Build, Conquer</div>
           </div>
           
@@ -625,9 +660,7 @@
 <div class="isro-timer-wrap" aria-live="polite" aria-atomic="true">
   <div class="isro-timer-label">T-MINUS</div>
   <div id="isro-countdown" class="isro-timer" role="timer">00:00:00:00</div>
-    <div class="isro-extension-note">
-  Registration & Submission extended till 30 Dec
-</div>
+    
   <!-- optional rocket (hidden until LAUNCH) -->
   <div id="launch-rocket" class="launch-rocket" aria-hidden="true" title="Rocket"></div>
 </div>
@@ -1330,6 +1363,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

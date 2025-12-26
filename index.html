@@ -44,41 +44,48 @@
     <!-- Local overrides & hero/video stacking fixes -->
     <style>
         /* RED MOVING STRIP (T-MINUS STYLE) */
-.isro-marquee-wrap {
+/* FULL WIDTH RED STRIP */
+.isro-marquee-strip {
   position: absolute;
-  top: -22px;                 /* sits just above Think, Build, Conquer */
+  top: 26px;              /* adjust to sit above logo/tagline */
   left: 0;
-  right: 0;
+  width: 100vw;
+  height: 26px;
   overflow: hidden;
-  height: 22px;
+  z-index: 999;
   pointer-events: none;
 }
 
-.isro-marquee {
+/* TRACK */
+.isro-marquee-track {
+  display: flex;
+  width: max-content;
+  animation: marqueeScroll 28s linear infinite;
+}
+
+/* TEXT STYLE (T-MINUS MATCH) */
+.isro-marquee-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
   font-size: 12px;
   letter-spacing: 3px;
   text-transform: uppercase;
 
-  color: #fff;
-  background: linear-gradient(90deg, #c62828, #e53935);
-  padding: 4px 18px;
-  border-radius: 4px;
+  color: #ffffff;
+  background: linear-gradient(90deg, #b71c1c, #e53935);
 
-  display: inline-block;
+  padding: 4px 24px;
+  margin-right: 40px;
   white-space: nowrap;
-
-  /* slow smooth movement */
-  animation: marqueeMove 22s linear infinite;
+  border-radius: 3px;
 }
 
-/* smooth right → left movement */
-@keyframes marqueeMove {
+/* NEVER-ENDING SCROLL */
+@keyframes marqueeScroll {
   0% {
-    transform: translateX(100%);
+    transform: translateX(0);
   }
   100% {
-    transform: translateX(-120%);
+    transform: translateX(-50%);
   }
 }
 /* Local font (if you used a Trajan-like previously) - optional */
@@ -1363,6 +1370,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

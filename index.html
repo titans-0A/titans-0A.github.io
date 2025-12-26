@@ -44,26 +44,29 @@
     <!-- Local overrides & hero/video stacking fixes -->
     <style>
         /* RED MOVING STRIP (T-MINUS STYLE) */
-/* FULL WIDTH RED STRIP */
+/* FULL-WIDTH MOVING ALERT STRIP */
 .isro-marquee-strip {
   position: absolute;
-  top: 26px;              /* adjust to sit above logo/tagline */
+  top: 34px;                 /* below header, above logo */
   left: 0;
   width: 100vw;
-  height: 26px;
+  height: 36px;
+
   overflow: hidden;
-  z-index: 999;
+  z-index: 9999;
   pointer-events: none;
 }
 
 /* TRACK */
 .isro-marquee-track {
   display: flex;
+  align-items: center;
   width: max-content;
-  animation: marqueeScroll 28s linear infinite;
+  height: 100%;
+  animation: marqueeScroll 26s linear infinite;
 }
 
-/* TEXT STYLE (T-MINUS MATCH) */
+/* TEXT STYLE — T-MINUS MATCH */
 .isro-marquee-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
   font-size: 12px;
@@ -73,19 +76,29 @@
   color: #ffffff;
   background: linear-gradient(90deg, #b71c1c, #e53935);
 
-  padding: 4px 24px;
-  margin-right: 40px;
+  padding: 6px 28px;
+  margin-right: 48px;
   white-space: nowrap;
-  border-radius: 3px;
+  border-radius: 4px;
+  line-height: 1.4;
 }
 
 /* NEVER-ENDING SCROLL */
 @keyframes marqueeScroll {
-  0% {
-    transform: translateX(0);
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+
+/* MOBILE FIX — NO CLIPPING */
+@media (max-width: 480px) {
+  .isro-marquee-strip {
+    height: 40px;
   }
-  100% {
-    transform: translateX(-50%);
+
+  .isro-marquee-track span {
+    font-size: 11px;
+    padding: 7px 24px;
+    letter-spacing: 2.5px;
   }
 }
 /* Local font (if you used a Trajan-like previously) - optional */
@@ -633,15 +646,26 @@
 <!-- ======= end Header ======= -->
     <!-- ============== Start Hero section ========== -->
     
-   <section class="hero d-flex flex-column justify-content-center align-items-center mt-5 pt-5" id="hero">
-    <!-- HERO VIDEO WRAP (video sits below header; header visible) -->
-    <div class="hero-video-wrap" aria-hidden="true">
-      <video id="heroVideo" class="bg-video" autoplay muted playsinline loop preload="auto" poster="images/team/video-poster.jpg" tabindex="-1">
-        <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
-        <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
-        Your browser does not support the video tag.
-      </video>
+  <section class="hero d-flex flex-column justify-content-center align-items-center mt-5 pt-5" id="hero">
+  <!-- HERO VIDEO WRAP (video sits below header; header visible) -->
+  <div class="hero-video-wrap" aria-hidden="true">
 
+    <!-- 🔴 MOVING ALERT STRIP (ADD THIS HERE) -->
+    <div class="isro-marquee-strip">
+      <div class="isro-marquee-track">
+        <span>Registration Extended Till 30 Dec</span>
+        <span>Registration Extended Till 30 Dec</span>
+        <span>Registration Extended Till 30 Dec</span>
+      </div>
+    </div>
+
+    <!-- 🎥 Background Video -->
+    <video id="heroVideo" class="bg-video" autoplay muted playsinline loop preload="auto"
+           poster="images/team/video-poster.jpg" tabindex="-1">
+      <source src="images/team/team-working-timelapse.mp4" type="video/mp4">
+      <source src="images/team/Team%20Working%20Timelapse.mp4" type="video/mp4">
+      Your browser does not support the video tag.
+    </video>
       <!-- overlay & particles -->
       <div class="video-overlay"></div>
       <div id="particles-js"></div>
@@ -1366,6 +1390,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

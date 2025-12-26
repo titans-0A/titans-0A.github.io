@@ -60,24 +60,31 @@
   align-items: center;
 }
 
-/* Moving text ONLY */
-.isro-top-strip-text {
+/* moving belt */
+.isro-top-strip-track {
+  display: flex;
+  width: max-content;
+  animation: tickerScroll 30s linear infinite; /* SLOW + LOOP */
+}
+
+/* text */
+.isro-top-strip-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
   font-size: 12px;
   letter-spacing: 3px;
-  text-transform: uppercase;
   color: #ffffff;
-
   white-space: nowrap;
-  padding-left: 100%;
-
-  animation: stripScrollLTR 32s linear infinite;
+  padding-right: 60px; /* spacing between repeats */
 }
 
-/* LEFT → RIGHT motion */
-@keyframes stripScrollLTR {
-  0%   { transform: translateX(-100%); }
-  100% { transform: translateX(100%); }
+/* infinite loop magic */
+@keyframes tickerScroll {
+  0% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-50%);
+  }
 }
 
 /* Mobile safety */
@@ -1409,6 +1416,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

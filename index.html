@@ -57,14 +57,12 @@
   display: flex;
   align-items: center;
 }
-
-/* moving belt */
+/* track */
 .isro-top-strip-track {
   display: flex;
-  width: max-content;
-  animation: tminusScroll 22s linear infinite;
+  white-space: nowrap;
+  animation: tickerMove 18s linear infinite; /* faster & readable */
 }
-
 /* text */
 .isro-top-strip-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
@@ -72,16 +70,18 @@
   letter-spacing: 3px;
   color: #ffffff;
   white-space: nowrap;
-  padding-right: 60px;
+  padding-right: 80px; /* controlled spacing */
 }
-
-/* true infinite loop */
-@keyframes tminusScroll {
-  0%   { transform: translateX(-50%); }
-  100% { transform: translateX(0); }
+/* REAL marquee movement */
+@keyframes tickerMove {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
 }
-
-/* mobile safety */
+/* mobile */
 @media (max-width: 480px) {
   .isro-top-strip {
     height: 36px;
@@ -91,7 +91,7 @@
     letter-spacing: 2.5px;
   }
 }
-        /* LEFT BRAND UNDER RED STRIP */
+/* LEFT BRAND UNDER RED STRIP */
 .hero-left-brand {
   position: absolute;
   top: 34px;              /* below red strip */
@@ -672,8 +672,8 @@
    <!-- 🔴 FIXED TOP STRIP -->
 <div class="isro-top-strip">
   <div class="isro-top-strip-track">
-    <span>🚀 MISSION WINDOW EXTENDED • REGISTER NOW •</span>
-    <span>🚀 MISSION WINDOW EXTENDED • REGISTER NOW •</span>
+    <span>🚀 REGISTER NOW • MISSION WINDOW EXTENDED TILL 30 DEC •</span>
+    <span>🚀 REGISTER NOW • MISSION WINDOW EXTENDED TILL 30 DEC •</span>
   </div>
 </div>
     <!-- 🎥 Background Video -->
@@ -1406,6 +1406,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

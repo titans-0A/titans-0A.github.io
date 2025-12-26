@@ -90,6 +90,28 @@
     letter-spacing: 2.5px;
   }
 }
+        /* LEFT BRAND UNDER RED STRIP */
+.hero-left-brand {
+  position: absolute;
+  top: 34px;              /* directly below strip */
+  left: 40px;
+
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  z-index: 10001;
+}
+
+.hero-left-brand .logo-mini {
+  height: 64px;
+}
+
+.hero-left-brand .titans-mini {
+  font-family: 'TrajanProLocal', 'Outfit', sans-serif;
+  font-size: 18px;
+  color: #fff;
+}
 
 /* Local font (if you used a Trajan-like previously) - optional */
         @font-face {
@@ -168,15 +190,16 @@
 
         /* center content (logo + title + buttons) sits above particles+video */
         .hero-center-content {
-            position: absolute;
-            inset: 0;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-direction: column;
-            z-index: calc(var(--hero-z) + 20);
-            pointer-events: auto; /* allow clicking buttons */
-            padding-top: 34px; /* SAME as strip height */
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+
+  z-index: calc(var(--hero-z) + 20);
+  pointer-events: auto;
 }
     
 
@@ -659,12 +682,11 @@
 
       <!-- center overlay content: ISRO title + button -->
       <div class="hero-center-content" role="region" aria-label="ISRO Robotics Team Selection Challenge">
-          <!-- top-left miniature Titans branding inside hero -->
-          <div class="hero-center-top" aria-hidden="true">
-              <img src="images/logo/titans_logo_white/titans_logo_white.png" alt="Titans" class="logo-mini" />
-              <div class="isro-marquee-wrap">
-              <div class="titans-mini">Think, Build, Conquer</div>
-          </div>
+<!-- LEFT BRANDING -->
+<div class="hero-left-brand">
+  <img src="images/logo/titans_logo_white/titans_logo_white.png" class="logo-mini" />
+  <div class="titans-mini">Think, Build, Conquer</div>
+</div>
           
             <div style="text-align:center;">
               <div class="isro-glass-wrap">
@@ -1377,6 +1399,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

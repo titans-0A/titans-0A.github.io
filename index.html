@@ -50,7 +50,7 @@
   top: 0;
   left: 0;
   width: 100%;
-  height: 34px;
+  height: 32px;
   background: #c62828;
   overflow: hidden;
   z-index: 10000;
@@ -58,37 +58,33 @@
   align-items: center;
 }
 
-/* TRACK that moves */
+/* moving belt */
 .isro-top-strip-track {
   display: flex;
   width: max-content;
-  animation: tickerScroll 18s linear infinite;
+  animation: tminusScroll 26s linear infinite;
 }
 
-/* EACH TEXT BLOCK */
+/* text */
 .isro-top-strip-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
   font-size: 12px;
   letter-spacing: 3px;
   color: #ffffff;
   white-space: nowrap;
-  padding-right: 48px; /* spacing between repeats */
+  padding-right: 60px;
 }
 
-/* TRUE CONTINUOUS SCROLL */
-@keyframes tickerScroll {
-  from {
-    transform: translateX(0);
-  }
-  to {
-    transform: translateX(-50%);
-  }
+/* true infinite loop */
+@keyframes tminusScroll {
+  0%   { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
 }
 
-/* Mobile */
+/* mobile safety */
 @media (max-width: 480px) {
   .isro-top-strip {
-    height: 38px;
+    height: 36px;
   }
   .isro-top-strip-track span {
     font-size: 11px;
@@ -675,14 +671,10 @@
   <div class="hero-video-wrap" aria-hidden="true">
    <!-- 🔴 FIXED TOP STRIP -->
 <div class="isro-top-strip">
- <div class="isro-top-strip-text">
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC &nbsp;&nbsp;•&nbsp;&nbsp;
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC &nbsp;&nbsp;•&nbsp;&nbsp;
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC &nbsp;&nbsp;•&nbsp;&nbsp;
-  REGISTER NOW! &nbsp;&nbsp;•&nbsp;&nbsp;  MISSION WINDOW EXTENDED TILL 30 DEC
-</div>
+  <div class="isro-top-strip-track">
+    <span>🚀 MISSION WINDOW EXTENDED • REGISTER NOW •</span>
+    <span>🚀 MISSION WINDOW EXTENDED • REGISTER NOW •</span>
+  </div>
 </div>
     <!-- 🎥 Background Video -->
     <video id="heroVideo" class="bg-video" autoplay muted playsinline loop preload="auto"
@@ -1414,6 +1406,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

@@ -47,52 +47,50 @@
 /* ===== FIXED RED STRIP ABOVE VIDEO ===== */
 .isro-top-strip {
   position: absolute;
-  top: 0;                 /* EXACTLY on video top */
+  top: 0;
   left: 0;
   width: 100%;
   height: 34px;
-
-  background: #c62828;    /* solid red */
+  background: #c62828;
   overflow: hidden;
   z-index: 10000;
-
   display: flex;
   align-items: center;
 }
 
-/* moving belt */
+/* TRACK that moves */
 .isro-top-strip-track {
   display: flex;
   width: max-content;
-  animation: tickerScroll 30s linear infinite; /* SLOW + LOOP */
+  animation: tickerScroll 18s linear infinite;
 }
 
-/* text */
+/* EACH TEXT BLOCK */
 .isro-top-strip-track span {
   font-family: 'Nasalization', 'Outfit', sans-serif;
   font-size: 12px;
   letter-spacing: 3px;
   color: #ffffff;
   white-space: nowrap;
-  padding-right: 60px; /* spacing between repeats */
+  padding-right: 48px; /* spacing between repeats */
 }
 
-/* infinite loop magic */
+/* TRUE CONTINUOUS SCROLL */
 @keyframes tickerScroll {
-  0% {
+  from {
     transform: translateX(0);
   }
-  100% {
+  to {
     transform: translateX(-50%);
   }
 }
 
-/* Mobile safety */
+/* Mobile */
 @media (max-width: 480px) {
   .isro-top-strip {
     height: 38px;
   }
-  .isro-top-strip-text {
+  .isro-top-strip-track span {
     font-size: 11px;
     letter-spacing: 2.5px;
   }
@@ -1416,6 +1414,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

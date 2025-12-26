@@ -93,7 +93,7 @@
   left: 40px;
 
   display: flex;
-  align-items: flex-start;   /* 🔥 key fix */
+  align-items: center;     /* ✅ stable */
   gap: 6px;
 
   z-index: 10001;
@@ -111,8 +111,10 @@
   letter-spacing: 0.6px;
   color: #ffffff;
   white-space: nowrap;
+
   line-height: 1;
-  margin-top: 6px;          /* 🔥 baseline alignment */
+  position: relative;
+  top: -2px;               /* 🔥 THE KEY FIX */
 }
 
 /* Local font (if you used a Trajan-like previously) - optional */
@@ -1403,6 +1405,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

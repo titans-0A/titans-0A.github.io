@@ -43,6 +43,14 @@
 
     <!-- Local overrides & hero/video stacking fixes -->
     <style>
+        .isro-extension-note {
+  margin-top: 8px;
+  font-family: 'Outfit', sans-serif;
+  font-size: 13px;
+  letter-spacing: 0.4px;
+  color: rgba(255,255,255,0.75);
+  text-align: center;
+}
 /* Local font (if you used a Trajan-like previously) - optional */
         @font-face {
             font-family: 'TrajanProLocal';
@@ -508,70 +516,6 @@
 }
 
 /* simple rocket shape (CSS) that lifts on launch */
-.launch-rocket {
-  width: 48px;
-  height: 80px;
-  margin: 12px auto 0;
-  background: linear-gradient(180deg,#d1b26f,#b58f3a);
-  border-radius: 14px 14px 8px 8px;
-  position: relative;
-  opacity: 0;
-  transform: translateY(0);
-  transition: transform 900ms cubic-bezier(.2,.8,.2,1), opacity 600ms ease;
-  box-shadow: 0 8px 30px rgba(0,0,0,0.5), inset 0 -6px 12px rgba(255,255,255,0.06);
-}
-
-/* rocket nose */
-.launch-rocket::before {
-  content: '';
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  top: -14px;
-  width: 34px;
-  height: 28px;
-  background: linear-gradient(180deg,#ffd5a1,#ffb36d);
-  border-radius: 50% 50% 10% 10%;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-}
-
-/* fins */
-.launch-rocket::after {
-  content: '';
-  position: absolute;
-  bottom: 6px;
-  left: 6px;
-  width: 36px;
-  height: 12px;
-  background: linear-gradient(90deg,#b36f2b,#8a5b20);
-  border-radius: 2px;
-  transform: rotate(-10deg);
-  box-shadow: 0 2px 8px rgba(0,0,0,0.35);
-}
-
-/* visible + lift when launched */
-.launch-rocket.visible {
-  opacity: 1;
-  transform: translateY(-180px) scale(0.95);
-}
-
-/* small flame (appears on launch) */
-.launch-rocket .flame {
-  position: absolute;
-  left: 50%;
-  transform: translateX(-50%);
-  bottom: -18px;
-  width: 18px;
-  height: 18px;
-  background: radial-gradient(circle at 30% 30%, #fff2a8 0%, #ffb347 35%, #ff5a00 70%, #b71c00 100%);
-  border-radius: 50%;
-  filter: blur(0.6px);
-  opacity: 0;
-  transition: opacity 220ms ease;
-}
-
-/* flame visible during launch */
-.launch-rocket.visible .flame { opacity: 1; animation: flickerFlame 220ms infinite; }
 
 @keyframes flickerFlame {
   0% { transform: translateX(-50%) translateY(0) scale(1); opacity: 1; }
@@ -681,6 +625,9 @@
 <div class="isro-timer-wrap" aria-live="polite" aria-atomic="true">
   <div class="isro-timer-label">T-MINUS</div>
   <div id="isro-countdown" class="isro-timer" role="timer">00:00:00:00</div>
+    <div class="isro-extension-note">
+  Registration & Submission extended till 30 Dec
+</div>
   <!-- optional rocket (hidden until LAUNCH) -->
   <div id="launch-rocket" class="launch-rocket" aria-hidden="true" title="Rocket"></div>
 </div>
@@ -1342,10 +1289,10 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
   // -------------------------
   document.addEventListener('DOMContentLoaded', function () {
     // change this if you want another target date/time
-    const targetDate = new Date("2025-12-25T23:59:00+05:30");
+    const targetDate = new Date("2025-12-30T23:59:00+05:30");
 
     const el = document.getElementById("isro-countdown");
-    const rocket = document.getElementById("launch-rocket");
+    
 
     if (!el) {
       console.warn("Countdown element #isro-countdown not found.");
@@ -1361,14 +1308,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
       if (diff <= 0) {
         el.textContent = "LAUNCH!";
         el.classList.add('launching');
-        if (rocket) {
-          rocket.classList.add('visible');
-          if (!rocket.querySelector('.flame')) {
-            const f = document.createElement('div');
-            f.className = 'flame';
-            rocket.appendChild(f);
-          }
-        }
+
         clearInterval(intervalId);
         return;
       }
@@ -1390,6 +1330,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

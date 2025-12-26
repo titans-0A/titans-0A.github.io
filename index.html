@@ -93,24 +93,29 @@
         /* LEFT BRAND UNDER RED STRIP */
 .hero-left-brand {
   position: absolute;
-  top: 34px;              /* directly below strip */
+  top: 34px;              /* below red strip */
   left: 40px;
 
   display: flex;
   align-items: center;
-  gap: 10px;
+  gap: 6px;               /* 👈 tighter gap */
 
   z-index: 10001;
 }
 
 .hero-left-brand .logo-mini {
-  height: 64px;
+  height: 42px;           /* 👈 reduced from 64px */
+  width: auto;
+  display: block;
 }
 
 .hero-left-brand .titans-mini {
   font-family: 'TrajanProLocal', 'Outfit', sans-serif;
-  font-size: 18px;
-  color: #fff;
+  font-size: 14px;        /* 👈 smaller text */
+  letter-spacing: 0.6px;  /* 👈 tighter tracking */
+  color: #ffffff;
+  white-space: nowrap;    /* keeps it in one line */
+  line-height: 1;         /* 👈 vertical tightness */
 }
 
 /* Local font (if you used a Trajan-like previously) - optional */
@@ -1399,6 +1404,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 

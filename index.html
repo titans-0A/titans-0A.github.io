@@ -75,9 +75,16 @@
 
 /* TRUE FULL LEFT → RIGHT PASS */
 @keyframes tickerMove {
-  0%   { transform: translateX(0); }
-  100% { transform: translateX(-33.333%); }
+  0%   { transform: translateX(-33.333%); }
+  100% { transform: translateX(0); }
  }
+/* 📱 FORCE LEFT BRAND ON MOBILE  */
+@media (max-width: 768px) {
+  .hero-left-brand {
+    left: 16px;            /* stick to left edge */
+    right: auto;
+    transform: none;       /* 🔥 cancels any centering */
+  }
 }
 /* LEFT BRAND UNDER RED STRIP */
 .hero-left-brand {
@@ -1396,6 +1403,7 @@ Mentors: MR. Saket Thool-Technical Lead FEV at Intel Corporation and
 </body>
 
 </html>
+
 
 
 
